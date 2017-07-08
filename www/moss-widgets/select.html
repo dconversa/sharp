@@ -1,0 +1,18 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+    
+<label style="font-weight:bold;">{{?it.required}}<span class="required">* </span>{{?}}{{=Moss.fn.string(it.label) || ''}}
+    
+<select id="{{=_wid}}" onclick="console.log(this.id + ' clicked')"; onchange="{{?it.onChange}}{{=it.onChange}};{{?}}Moss.ui.onSelectChange('{{=_wid}}',{{=(it.fireChange === true)}});" data-moss="widget">
+    {{ var addText = false; }}
+    {{~it.options :opt:index}}
+        <option value="{{=opt.value}}" {{?opt.addText}}data-addtext="true"{{?}}>{{=Moss.fn.string(opt.label)}}</option>
+        {{addText = opt.addText===true ? true: addText;}}
+    {{~}}	
+</select>
+</label>
+{{?opt.addText === true}}
+<div id="{{=_wid+':text_DIV'}}" style="display:none"><input id="{{=_wid+':text'}}" data-moss="widget" type="text"/></div>
+{{?}}
+
+</div>

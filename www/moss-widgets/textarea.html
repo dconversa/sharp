@@ -1,0 +1,8 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+<label style="font-weight:bold;">
+    {{?it.required}}<span class="required">* </span>{{?}}
+    {{=Moss.fn.string(it.label) || ''}}
+    <textarea id="{{=_wid}}" data-moss="widget" autocomplete="off" autocorrect="off" 
+              autocapitalize="off" spellcheck="false"></textarea></label>
+</div>    

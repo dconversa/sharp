@@ -1,0 +1,28 @@
+<h2 style="{{=Moss.model.survey.config.titleStyles[it.style] || 'background-color: #aad572;'}}" class="ui-bar ui-bar-a ui-corner-all">
+	<table>
+		<tr>
+			<td style="font-size: 2em"><i class="sharp-{{=it.id}}"></i></td>
+			<td style="width: 90%;padding-left:30px;">{{=Moss.fn.string(it.title)}}{{?it.required}}<span class="required" style="color: inherit!important"> * </span>{{?}}</td>
+            <td style="width: 100px">&nbsp;</td>			
+		</tr>
+		{{? it.subtitle}}
+		<tr>
+			<td style="text-align: left; vertical-align:top">[{{=it.pageInfo || ''}}]</td>
+			<td style="padding-left:30px;">
+				<p style="font-size: 0.60em;margin:0px;font-style:italic">
+					{{=Moss.fn.string(it.subtitle)}}
+				</p>
+			</td>
+			<td style="white-space: nowrap; font-size: 0.50em;text-align: right; vertical-align:bottom">
+                {{=it.id || ''}}{{?it.ref}} / Ref. {{=it.ref}}{{?}}
+            </td>
+		</tr>
+		{{?}}
+	</table>
+</h2>
+{{? it.sensitive }}
+<h3 style="background-color: lightyellow;" class="ui-bar ui-bar-a ui-corner-all">
+    <span class="ui-icon-alert ui-btn-icon-left " style="position:relative;" />
+    {{=Moss.fn.string('@_sensitive_question')}}
+</h3>
+{{?}}

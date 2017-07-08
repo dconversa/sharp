@@ -1,0 +1,18 @@
+{{
+    var _wid = Moss.model.cqid + '.' + it.id; 
+    var _oninput = Moss.fn.concat (";", [it.oninput]);
+}}
+<div data-mio="" {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}{{?it.style}} style="{{=it.style}}"{{?}}>
+    <label style="font-weight:bold;">
+        {{?it.required}}<span class="required">* </span>{{?}}
+        {{=Moss.fn.string(it.label)||''}}
+        {{ var _onchg = Moss.fn.concat (";", [it.onchange, it.fireChange ? "Moss.fn.fireChange(this)" : null]); }}
+        <input id="{{=_wid}}" type="number" data-moss="widget" min="{{=it.min || ''}}" 
+               max="{{=it.max || ''}}"{{?_onchg}} onchange="{{=_onchg}};"{{?}} 
+               {{?_oninput}} oninput="{{=_oninput}};"{{?}}               
+               value="" 
+               {{? it.pattern}} pattern="{{=it.pattern}}"{{?}}
+               {{? it.step}} step="{{=it.step}}"{{?}}
+               {{? it.inputmode}} inputmode="{{=it.inputmode}}"{{?}}>
+    </label>
+</div>    

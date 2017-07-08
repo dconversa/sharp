@@ -1,0 +1,40 @@
+<table data-role="table" class="table-stroke table-stripe" style="table-layout: fixed;">
+    <thead>
+        <tr>
+            <th style="width:5%">#</th>
+            <th style="width:5%">ID</th>
+            <th style="width:40%;" data-i18n="@WXE">Question</th>
+            {{ var _w=Math.round(55/Moss.model.surveys.length);}}
+            {{ for(i=0; i<Moss.model.surveys.length; i++) { }}
+                <th style="width:{{=_w}}%">{{=Moss.model.surveys[i].personName || ('Person #' + (parseInt(i)+1)) }}</th>
+            {{ } }}
+        </tr>
+    </thead>
+    <tbody>
+        {{ for(i=0; i<Moss.model.survey.questions.length; i++) { }}
+            <tr>
+                <td align="middle" style="{{=Moss.model.survey.config.titleStyles[Moss.model.survey.questions[i].style] || ''}}">
+                    {{=i+1}}
+                    {{? Moss.model.survey.questions[i].required}}<span style="font-weight:bold;"> *</span>{{??}}&nbsp;{{?}}
+                </td>
+                <td style="font-size: 0.7em">
+                    {{=Moss.model.survey.questions[i].id}}
+                </td>
+                <td style="padding-left: 20px">
+                    {{?Moss.model.survey.questions[i].sensitive}}
+                        <span class="ui-icon-lock ui-btn-icon-left " style="position:relative;" />
+                    {{?}}
+                    {{=Moss.fn.string(Moss.model.survey.questions[i].title) || ''}}
+                </td>
+                {{ var _statusColors = ["#C0C0C0","#FCF8E3","#95D47B", "#FFFFFF"] ;}}
+                {{for(j=0; j<Moss.model.surveys.length; j++){ }}
+                    {{ 
+                        var _status = Moss.fn.questionStatus(i,j);
+                    }}
+                    <td align="center"><a href="survey-edit.html" onclick="Moss.fn.jumpToQuestion({{=i}},{{=j}});" 
+                        class="ui-btn ui-mini" style="width:20px;height:20px;background-color:{{=_statusColors[_status]}}">{{?_status===0}}-{{?}}</a></td>
+                {{ } }}
+            </tr>
+        {{ } }}
+    </tbody>        
+</table>

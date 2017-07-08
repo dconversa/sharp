@@ -1,0 +1,81 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}} class="{{=it.id}}">
+{{	var _cols = it.cols || 1; 
+	_cols = _cols>4? 4: _cols;
+	var _grids = ['a','b','c','d'];
+    var hasReset = false;
+    for (var i = 0; i < it.options.length; i++) {
+        if (it.options[i].reset) {
+            hasReset = true;
+            break;
+        }
+    }
+}}
+
+                                          
+{{? _cols>1 }}
+	<p style="font-weight:bold;">
+        {{?it.required}}<span class="required">* </span>{{?}}
+        {{=Moss.fn.string(it.label) || ''}}
+    </p>
+	<div class="ui-grid-{{=_grids[_cols-2]}}">
+{{?}}
+
+{{
+	var _rows = Math.ceil(it.options.length / _cols);
+	var _row = 0;
+	var _col = 0;
+}}
+
+{{~it.options :opt:index}}
+	{{? _row===0}}
+		{{? _cols>1}}<div class="ui-block-{{=_grids[_col]}}">{{?}}
+		<fieldset data-role="controlgroup">
+        {{? _cols==1}}
+            <legend>
+                {{?it.required}}<span class="required">* </span>{{?}}
+                <span style="font-weight:bold;">{{=Moss.fn.string(it.label) || ''}}</span>
+            </legend>
+        {{?}}
+	{{?}}
+	
+	<label>{{=Moss.fn.string(opt.label)}}
+        {{ var _onclick = ";this.focus()";
+            if (opt.onclick) _onclick = ";" + opt.onclick;
+            if (opt.addText) _onclick = _onclick + ";Moss.ui.toggleOptText(this.id)";
+            if (opt.reset) _onclick = _onclick + ";Moss.ui.resetMulti('"+ it.id +"',this)";
+            else if (hasReset) _onclick = _onclick + ";Moss.ui.uncheckResetMulti('"+ it.id +"',this)";
+            if (it.fireChange) _onclick = _onclick + ";Moss.fn.fireChange(this)";        
+            _onclick = _onclick === "" ? null : _onclick.substr(1);
+        }}
+		<input id="{{=_wid+':'+opt.value}}" type="checkbox" data-moss="widget" 
+               data-moss-label-key="{{=opt.label}}" 
+            {{?opt.reset}}class="moss-reset-multi"{{?}}
+			value="{{=opt.value}}"{{?_onclick}} onclick="{{=_onclick}}{{?}}" />
+	</label>
+	{{?opt.addText}}
+		<div class="moss-additional-text" id="{{=_wid+':'+opt.value+':text_DIV'}}" style="display:none"><input id="{{=_wid+':'+opt.value+':text'}}" data-moss="widget" type="text" 
+				placeholder="{{=Moss.fn.string(opt.placeHolder || opt.label)}}" /></div>
+	{{?}}
+
+	{{ _row++ ;}}
+	{{? _row===_rows}}
+		</fieldset>
+		{{? _cols>1}}</div>{{?}}
+		{{ _row = 0 ;
+		   _col++;
+		}}						
+	{{?}}
+{{~}}
+
+{{? _row>0}}
+	</fieldset>
+	{{? _cols>1}}</div>{{?}}
+{{?}}
+
+{{? _cols>1 }}
+</div>
+{{?}}
+</div>
+
+

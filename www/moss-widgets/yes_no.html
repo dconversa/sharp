@@ -1,0 +1,20 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+<fieldset data-role="controlgroup" data-type="horizontal" class="yes_no{{?it.class}} {{=it.class}}{{?}}">
+	<legend style="font-weight:bold;">
+        {{?it.required}}<span class="required">* </span>{{?}}    
+        {{=Moss.fn.string(it.label) || ''}}
+    </legend>
+	<label>{{=Moss.fn.string('@_yes')}}
+		<input id="{{=_wid+':yes'}}" type="radio" name="{{=_wid}}" onclick="this.focus()"
+               data-moss="widget" value="yes"{{?it.fireChange}} onchange="Moss.fn.fireChange(this);"{{?}} />
+	</label>
+	<label>{{=Moss.fn.string('@_no')}}
+		<input id="{{=_wid+':no'}}" type="radio" name="{{=_wid}}" onclick="this.focus()"
+               value="no"{{?it.fireChange}} onchange="Moss.fn.fireChange(this);"{{?}}/>
+	</label>
+</fieldset>
+{{?it.tip}}
+<p style="font-size:0.85em;font-style:italic">{{=Moss.fn.string(it.tip)}}</p>
+{{?}}
+</div>

@@ -1,0 +1,15 @@
+<div id="moss-ui-message-dialog" data-role="popup" data-dismissible="false">
+    <div data-role="header" data-theme="b">
+        <h1>{{=it.title}}</h1>
+    </div>
+    <div role="main" class="ui-content">
+        <h3>{{=it.message}}</h3>
+        {{?it.confirmLabel}}
+            <a href="#" onclick="$('#moss-ui-message-dialog').data('confirm',true)" 
+               class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back">{{=it.confirmLabel}}</a>
+        {{?}}
+        <div style="text-align: center;">
+            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" >{{=it.cancelLabel || 'Close'}}</a>    
+        </div>        
+    </div>
+</div>

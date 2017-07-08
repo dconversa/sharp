@@ -1,0 +1,4 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<fieldset data-role="controlgroup" data-type="horizontal"{{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+	<input id="{{=_wid}}" type="radio" onclick="this.focus()" name="{{=it.name}}" data-moss="widget" data-mossType="radio-single" value="yes"/>
+</fieldset>

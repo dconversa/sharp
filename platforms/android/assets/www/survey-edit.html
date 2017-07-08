@@ -1,0 +1,277 @@
+    <!DOCTYPE html>
+    <html>
+
+    <body>
+        <div id="survey-edit" data-url="edit-page" data-role="page">
+
+            <div id="left-panel" data-role="panel" data-display="push" data-theme="b">
+                <ul data-role="listview">
+                    <li data-icon="home">
+                        <a href="index.html" class="fao-light-text" onclick="Moss.fn.bindToModel();" data-transition="fade" data-i18n="@_home">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="survey-progress.html" class="fao-light-text" data-transition="flip" data-i18n="@_show_progress">Show Overall Progress</a>
+                    </li>
+                    <li>
+                        <a class="fao-light-text" href="#hide-dialog" data-rel="popup" data-i18n="@_hide_show_participants">Hide/Show Participants</a>
+                    </li>
+                    <li>
+                        <a href="#group-dialog" class="fao-light-text" onclick="Moss.fn.updateGroupInfo();" data-rel="popup" data-i18n="@_change_group_info">Change Group Info</a>
+                    </li>
+                     <li >
+                        <a href="javascript:void(0);" onclick="Moss.fn.exportSurveys(Moss.model.surveys[Moss.model.currentSurveyIdx]);" class="fao-light-text ui-icon-picture-o" data-i18n="@_export_survey">Export Survey</a>
+                    </li>
+                    
+                    <li >
+                        <!--<a href="#pictures-dialog" onclick="Moss.fn.getCurrentSurveyPictures();" class="fao-light-text ui-icon-picture-o ui-btn-icon-right" data-rel="popup" data-position-to="window" data-transition="pop" data-i18n="@_add_pictures" >Add Pictures</a>-->
+                         <a href="javascript:void(0);" onclick="Moss.fn.openPicturesPopup('current');" class="fao-light-text ui-icon-picture-o" data-i18n="@_add_pictures">Add Pictures</a>
+                    </li>                    
+                    <li data-icon="delete">
+                        <a href="#delete-dialog" class="fao-light-text" data-rel="popup" data-position-to="window" data-transition="pop" data-i18n="@_delete_survey">Delete Survey</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div data-role="popup" id="lang-dialog"  data-position-to="window" data-overlay-theme="b" data-theme="a" data-dismissible="true" style="min-width:500px;">
+                <div data-role="header" data-theme="b">
+                    <h1 data-i18n="@_choose_language" >Choose Language</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend>Language</legend>
+                        <label for="rdclan1">English</label>
+                        <input id="rdclan1" type="radio" name="rd-clan" value="en" checked="checked" />
+                        <label for="rdclan2">Français</label>
+                        <input id="rdclan2" type="radio" name="rd-clan" value="fr" />
+                        <label for="rdclan3">Português</label>
+                        <input id="rdclan3" type="radio" name="rd-clan" value="pt" />
+                    </fieldset>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                    <a href="#" onclick="Moss.fn.changeLanguage();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow">Ok</a>
+                </div>
+            </div>      
+
+            <div id="group-dialog" data-role="popup" data-position-to="window"  data-theme="a" data-dismissable="false" style="min-width:600px;">
+                <div data-role="header" data-theme="b">
+                    <h4 data-i18n="@_change_group_info">Change Group Info</h4>
+                </div> 
+                <div role="main" class="ui-content">
+                    <label><span data-i18n="@_ap_ffs"></span><select id="supergroup-edit"></select></label>
+                    <label><span data-i18n="@_gsn"></span><input id="group-name" type="text"/></label>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                    <a href="#" onclick="Moss.fn.changeGroupInfo();" 
+                    class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow">Ok</a>
+                </div>
+            </div>   
+
+            <div id="right-panel" data-role="panel" data-display="push" data-position="right" data-theme="b">
+                <div class="ui-corner-all custom-corners">
+                  <div class="ui-bar ui-bar-b">
+                      <h3 class="fao-light-text" data-i18n="@_current_person">Current Person - <span id="person-practice" data-i18n="@_practice_not_set">(Practice not set yet)</span> </h3>
+                  </div>
+                  <div class="ui-body ui-body-b">
+                    <input id="person-name" data-theme="a"  placeholder="(Name not set yet)" onchange="Moss.fn.setPersonName(this.value);Moss.fn.bindToView()"/>
+                </div>
+            </div>
+
+            <div id="qstatus-single" class="ui-corner-all custom-corners">
+            </div>
+
+            <a href="#" id="showHideSurveys" class="fao-light-text" onclick="Moss.fn.hideAllButThis();" data-role="button" data-icon="eye" data-iconpos="right" data-i18n="@T42">Hide All But This</a>
+            <a href="#move-dialog"class="fao-light-text"  data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-icon="action" data-iconpos="right" data-i18n="@FY9">Move to another group</a>
+            <a href="survey-scoring.html" class="fao-light-text" data-role="button" data-icon="bar-chart-o" data-iconpos="right" data-i18n="@DG1">Scoring Report and Certificate</a>
+            <br/><br/>
+            <a href="#remove-dialog" class="fao-light-text" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-icon="delete" data-iconpos="right" data-i18n="@JLR">Remove Partecipant</a>
+        </div>
+
+
+        <div data-role="popup" id="move-dialog" data-position-to="window" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
+            <div data-role="header" data-theme="b">
+                <h1>Detach</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title" data-i18n="@ZSK">Move the current person to another group?</h3>
+                <p data-i18n="@FFZ">This action cannot be undone.</p>
+                <div class="ui-field-contain">
+                <label data-i18n="@TTZ">Choose Group/Session:</label>
+                    <select name="other-grps" id="other-grps">
+                    </select>
+                </div>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.moveToGroup()" 
+                    class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow" data-i18n="@FY8">Move</a>
+            </div>
+        </div>        
+
+        <div data-role="popup" id="remove-dialog" data-position-to="window" data-overlay-theme="b" data-theme="a" data-dismissible="true" style="max-width:400px;">
+            <div data-role="header" data-theme="b">
+                <h1 data-i18n="@UY4">Remove</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title" data-i18n="@N0U">Remove the current partecipant?</h3>
+                <p data-i18n="@FFZ">This action cannot be undone.</p>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.removeCurrentSurvey();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow" data-i18n="@UY4">Remove</a>
+            </div>
+        </div>  
+
+        <div data-role="popup" id="delete-dialog" data-position-to="window" data-overlay-theme="b" data-theme="a" data-dismissible="true" style="max-width:400px;">
+            <div data-role="header" data-theme="b">
+                <h1 data-i18n="@_delete">Delete</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title" data-i18n="@XLY">Delete the whole Survey?</h3>
+                <p data-i18n="@JUT">Warning: All the questionnaires of the current group will be permanently deleted.</p>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.deleteGroup();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow" data-i18n="@_delete">Delete</a>
+            </div>
+        </div>  
+                                                
+        <div data-role="popup" id="hide-dialog" data-position-to="window" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
+            <div data-role="header" data-theme="b">
+                <h1 data-i18n="@PY9">Hide/Show</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="hide-show-div">
+                </div>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.setSurveysVisibility();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow" data-i18n="@VNQ">Confirm</a>
+            </div>
+        </div>        
+
+        <div id="comments-dialog" data-role="popup" data-position-to="window" data-overlay-theme="b" data-theme="a" style="max-width:400px;">
+            <div data-role="header" data-theme="b">
+                <h4 data-i18n="@WVM">Your comments</h4>
+            </div>
+            <div role="main" class="ui-content">
+                <label data-i18n="@ZMF">Add Your comments/feedback to this question                    
+                </label>
+                <textarea id="question-comments"></textarea>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.setCurrentQuestionComments();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow">Ok</a>
+            </div>
+        </div>        
+
+        <div id="pictures-dialog" data-role="popup" data-position-to="window" data-overlay-theme="b" data-theme="a" style="max-heigth:700px;max-width:1000px;width: 1000px;heigth:600px !important;">
+            <input type="hidden" id="current-qid"/>
+            <div data-role="header" data-theme="b">
+                <h4 data-i18n="@WBA">Your pictures</h4>
+            </div>
+            <div role="main" class="ui-content">
+                <label data-i18n="@WBC">Add Your pictures to this question </label>
+                <button id="btn-photo-camera" class="fao-bar-button" data-icon="info" onclick="Moss.fn.getPicture(1);" data-iconpos="right" data-role="button"  data-i18n="@2E29">Take picture</button>
+                <button id="btn-photo-album" class="fao-bar-button" data-icon="info" onclick="Moss.fn.getPicture(0);" data-iconpos="right" data-role="button"  data-i18n="@33DI">Select picture</button>
+               
+                <div class="ui-grid-a" id="question-pictures" >
+                </div>
+               
+                <a  id="btn-pictures-cancel" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-history="false" data-i18n="@_cancel">Cancel</a>
+                <a  id="btn-pictures-add" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-history="false" data-transition="flow">Ok</a>
+            </div>
+        </div>        
+
+        <!--style="max-heigth:700px;max-width:1000px;width: 1000px;heigth:600px !important;"-->         
+            
+        <div  id="clone-dialog" data-role="popup" data-overlay-theme="b" data-theme="a" style="max-width:400px;">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right" data-i18n="@_close">Close</a>
+            <div data-role="header" data-theme="b">
+                <h1 data-i18n="@M3K">Clone answers</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title" data-i18n="@VXB">Do you want to clone the current answer?</h3>
+                <p data-i18n="@GJ4">This will copy the answers given by the current person, only for the current question, for all the members of the group. After that it's possible to change the answers individually.</p>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.cloneCurrentAnswers();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow" data-i18n="@SIY">Clone</a>
+            </div>
+        </div>        
+
+        <div id="message-dialog" data-role="popup" data-dismissible="false" >
+             <div data-role="header" data-theme="b">
+                <h1 data-i18n="@_warning">Warning</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 id="message-dialog-content"></h3>
+                <a href="javascript:void(0);" onclick="Moss.ui.stayOnPage = true;" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back" data-transition="flow" data-i18n="@_stay_on_page">Stay on this page</a>
+                <a href="javascript:void(0);" id="pippo" onclick="$('#message-dialog').popup('close')" class="ui-btn ui-corner-all ui-shadow ui-btn-inline"  data-transition="flow" data-i18n="@_continue">Continue</a>
+            </div>            
+        </div>
+
+        <div id="person-dialog" data-role="popup" data-position-to="window" data-overlay-theme="b" data-theme="a" style="min-width: 400px;">            
+            <div data-role="header" data-theme="b">
+                <h4 data-i18n="@_add_person">Add new person</h4>
+            </div>
+            <div role="main" class="ui-content">
+                <form id="formNewPerson">
+                    <div class="ui-field-contain">
+                        <input id="input-person-id" name="input-person-id" type="hidden"> 
+                        <label for="input-person-pid" data-i18n="@_pid">Person Identifier</label> 
+                        <input id="input-person-pid" name="input-person-pid" type="text"> 
+                    </div>
+
+                    <div class="ui-field-contain">
+                        <label for="input-person-lastname" ><span class="required">* </span><span  data-i18n="@_lastname">Last name</span></label> 
+                        <input id="input-person-lastname" name="input-person-lastname" type="text"> 
+                    </div>
+
+                    <div class="ui-field-contain">
+                        <label for="input-person-firstname"><span class="required">* </span><span   data-i18n="@_firstname">First name</span></label> 
+                        <input id="input-person-firstname" name="input-person-firstname" type="text"> 
+                    </div>
+
+                    <a  id="btn-person-cancel" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                    <a  id="btn-person-add" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a"  data-transition="flow">Add</a>
+                </form>
+            </div>
+        </div> 
+
+        <div id="current-scoring" data-role="popup" class="ui-content" style="margin:30px">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" data-i18n="@_close">Close</a>
+            <div id="current-scoring-content">
+            </div>
+        </div>
+            
+            
+        <div id="question-help" data-role="popup" class="ui-content" style="margin:30px">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" data-i18n="@_close">Close</a>
+            <div id="question-help-content">
+            </div>
+        </div>
+
+
+        <div id="header" data-role="header" data-theme="a" class="fao-bar" data-position="fixed" data-tap-toggle="false">
+            <a href="#left-panel" class="ui-btn ui-icon-menu ui-btn-icon-notext ui-nodisc-icon" style="height:32px" data-i18n="@_menu">Menu</a>
+            <h2 class="fao-bar" style="font-weight: normal; font-size: 1.2em"  data-i18n="@FAO">
+                FAO - Mobile Survey Management
+            </h2>
+            <a href="#right-panel" class="ui-btn ui-icon-suser ui-btn-icon-notext ui-nodisc-icon" style="height:32px"  data-i18n="@_current_user">Current User</a>
+            <div id="navbar" data-role="controlgroup" data-type="horizontal" style="margin-bottom:0px;background-color: #f9f9f9;border-radius:0px"></div> 
+        </div>
+        
+        <div id="main_content" data-role="content" style="padding-top:0px;background-color: #EDF6F7">
+                <div id="main">
+                    <div id="title"></div>
+                    <div id="wset"></div>
+                </div>                
+        </div>
+
+        <div id="footer" data-role="footer" data-theme="a" class="ui-bar fao-bar" data-position="fixed" data-tap-toggle="true" >
+            <div data-role="controlgroup" data-type="horizontal" style="float:right; margin: 10px; margin-right:40px !important; ">
+
+                <button id="btn-scoring" class="fao-bar-button" data-icon="bar-chart-o" onclick="$('#current-scoring').popup('open', {positionTo: '#btn-scoring'})" data-iconpos="right" data-role="button" data-i18n="@_current_scoring">Current Scoring</button>
+                <button id="btn-help" class="fao-bar-button" data-icon="info" onclick="$('#question-help').popup('open', {positionTo: '#btn-help'})" data-iconpos="right" data-role="button"  data-i18n="@_question_help">Question Help</button>
+                <button href="#" class="fao-bar-button" style="float:left" onclick="this.focus()" data-icon="delete" data-iconpos="right" data-role="button" data-i18n="@_hide_keyboard" >Hide Keyboard</button>
+                <a href="#" onclick="Moss.fn.openPicturesPopup(Moss.fn.currentQuestion().id);" class="fao-bar-button ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-picture-o ui-btn-icon-right" data-rel="popup" data-i18n="@_add_pictures" >Add Pictures</a>
+                <a href="#comments-dialog" onclick="$('#question-comments').val(Moss.fn.getCurrentQuestionComments());" class="fao-bar-button ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-comment ui-btn-icon-right" data-rel="popup" data-i18n="@_add_question_comments">Add Question Comments</a>
+                <button class="fao-bar-button" id="btn-clone" data-icon="magic" onclick="$('#clone-dialog').popup('open')" data-iconpos="right" data-role="button" data-i18n="@_clone">Clone Current Answers</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    </body>
+
+    </html>

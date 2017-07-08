@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<div id="page-attendance-report-edit"  data-url="page-attendance-report-edit" data-role="page">
+
+    <div id="ar-person-dialog" data-role="popup" data-position-to="window" data-overlay-theme="b" data-theme="a" >            
+        <div data-role="header" data-theme="b">
+            <h4 >Add new person </h4>
+        </div>
+        <div role="main" class="ui-content">
+            <form id="ar-formNewPerson">
+                <div class="ui-field-contain">
+                    <input id="ar-input-person-id" name="ar-input-person-id" type="hidden"> 
+                    <label for="ar-input-person-pid" data-i18n="@_id">Persone Identifier</label> 
+                    <input id="ar-input-person-pid" name="ar-input-person-pid" type="text"> 
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="ar-input-person-lastname" data-i18n="@_lastname">Last name</label> 
+                    <input id="ar-input-person-lastname" name="ar-input-person-lastname" type="text"> 
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="ar-input-person-firstname" data-i18n="@_firstname">First name</label> 
+                    <input id="ar-input-person-firstname" name="ar-input-person-firstname" type="text"> 
+                </div>
+
+                <a  id="ar-btn-person-cancel" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <a  id="ar-btn-person-add" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow">Add</a>
+            </form>
+        </div>
+    </div>   
+    
+    <div data-role="popup" id="report-delete-dialog" data-position-to="window" data-overlay-theme="b" data-theme="a" data-dismissible="true" style="max-width:400px;">
+        <div data-role="header" data-theme="b">
+            <h1 data-i18n="@_delete">Delete</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3 class="ui-title" data-i18n="@_delete">Delete?</h3>            
+            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+            <a href="#" onclick="deleteAttendanceReport();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-transition="flow" data-i18n="@_delete">Delete</a>
+        </div>
+    </div>  
+     <div data-role="header" data-theme="a" class="fao-bar" data-position="fixed">
+        <a href="index.html" class="ui-btn ui-icon-shome ui-btn-icon-notext ui-nodisc-icon" style="height:32px" data-i18n="@_menu">Menu</a>
+        <h2 class="fao-bar" style="font-weight: normal; font-size: 1.2em" data-i18n="@_attendance_report">Attendance Report</h2>
+    </div>
+
+    <div role="main" class="ui-content">
+
+            <input type="hidden" id="ffsId" name="ffsId"  readonly > 
+            <input type="hidden" id="reportId" name="reportId"  readonly > 
+
+            <div class="ui-field-contain">
+                <label for="startDate" data-i18n="@_start_date">Start Date</label> 
+                <input id="startDate" name="startDate" type="date" data-role="date" readonly  > 
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="endDate" data-i18n="@_end_date">End Date</label> 
+                <input id="endDate" name="endDatePopup"  type="date" data-role="date" readonly > 
+            </div>	
+
+            <div class="ui-field-contain">
+                <label for="description" data-i18n="@_description">Description</label> 
+                <input id="description" name="description"  > 
+            </div>	
+
+            <div class="ui-field-contain">
+                <label for="ffsName" data-i18n="@_ffs">FFS/Community</label> 
+                <input id="ffsName" name="ffsName"  readonly > 
+            </div>
+
+            <div class="ui-corner-all custom-corners" style="margin-top:20px">
+                <div class="ui-bar ui-bar-b">
+                    <h3 class="fao-light-text" data-i18n="@_attendees">Attendees</h3>                      
+                </div>
+                <div  class="ui-field-contain">
+                    <table id="datatable-attendance-report" data-role="table" class="ui-body-d ui-shadow table-stripe ui-responsive">
+                    </table>				
+                </div>
+            </div>
+    </div><!-- /content -->
+
+    <div data-role="footer">
+        <div data-role="navbar" style="margin-top: 20px;">
+            <ul>
+                <li><a data-role="button" id="btn-back-report" class="fao-bar-button ui-btn ui-icon-back ui-btn-icon-right ui-btn-inline ui-shadow ui-corner-all" data-rel="back" data-i18n="@BSX">Back</a></li>
+                <li><a data-role="button" id="btn-save-report" class="fao-bar-button ui-btn ui-icon-check ui-btn-icon-right ui-btn-inline ui-shadow ui-corner-all" data-i18n="@_save">Save Report</a></li>                    
+            </ul>
+        </div>
+    </div>
+    <script src="js/attendance-report.js"></script> 
+   
+</div><!-- /page -->
+    
+
+
+</body>

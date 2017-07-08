@@ -1,0 +1,98 @@
+{
+	"countries": {
+		"south_sudan": {
+			"regions": {
+				"state_nbeg": {
+					"counties": {
+						"county_aweil_west": {
+							"districts": {
+								"payam_gomjuer_centre": {
+									"villages": {
+										"village_majak_lual": {},
+										"village_amodhic": {},
+										"village_angol": {},
+										"village_ayak_hong": {},
+										"village_yardit": {},
+										"village_anuay": {},
+										"village_machar_anyuon": {},
+										"village_hong_buoi": {},
+										"village_ayak_tit": {},
+										"village_panyieth": {}
+									}
+								}
+							}
+						},
+						"county_aweil_north": {
+							"districts": {
+								"payam_malual_north": {
+									"villages": {
+										"village_war-cuei": {},
+										"village_mayom_kuol": {},
+										"village_kak_luol": {},
+										"village_makuach": {},
+										"village_malek_deng_aguot": {},
+										"village_awai_nhom": {},
+										"village_mangar_ater": {},
+										"village_malith_jonghor": {},
+										"village_machol": {},
+										"state_warrap": {},
+										"county_aweil_west": {},
+										"county_aweil_north": {},
+										"village_panyior": {}
+									}
+								}
+							}
+						}
+					}
+				},
+				"state_warrap": {
+					"counties": {
+						"county_tonj_southt": {
+							"districts": {
+								"payam_tonj": {
+									"villages": {
+										"village_warmachar": {},
+										"village_warkar": {},
+										"village_warkei": {},
+										"village_wargiir": {},
+										"village_khartoum_jiet": {},
+										"village_guar-riec": {},
+										"village_lied": {},
+										"village_war-achual": {},
+										"village_nyiel": {}
+									}
+								},
+								"payam_agugo": {
+									"villages": {
+										"village_agugo": {},
+										"village_kuanja": {},
+										"village_dadar": {},
+										"village_makue": {},
+										"village_rungangok": {},
+										"village_nimiratalata": {},
+										"village_bijokogo": {},
+										"village_kulo": {},
+										"village_korkinyi": {}
+									}
+								},
+								"payam_manyang-ngok": {
+									"villages": {
+										"village_akuceng": {},
+										"village_piny-barkou": {},
+										"village_lingir": {},
+										"village_aluany-lec": {},
+										"village_malualdit": {},
+										"village_wut_ngong": {},
+										"village_abarkou": {},
+										"village_ameth-uyuon": {},
+										"village_chuei-cok": {}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

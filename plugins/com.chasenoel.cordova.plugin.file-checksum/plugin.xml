@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+            id="com.chasenoel.cordova.plugin.file-checksum" version="0.3.0">
+        <name>File Checksum</name>
+        <description>Cordova Plugin For Calculating SHA1 Checksums Of Files</description>
+        <license>Apache 2.0</license>
+        <keywords>cordova,checksum,sha1,hash</keywords>
+        <js-module src="www/file-checksum.js" name="FileChecksum">
+            <clobbers target="window.FileChecksum" />
+        </js-module>
+        <platform name="android">
+            
+            <config-file target="res/xml/config.xml" parent="/*">
+                <feature name="FileChecksum">
+                    <param name="android-package" value="com.chasenoel.cordova.plugin.FileChecksum"/>
+                </feature>
+            </config-file>
+            
+            <config-file target="AndroidManifest.xml" parent="/*">
+                 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            </config-file>
+            
+            <source-file src="src/android/FileChecksum.java" target-dir="src/com/chasenoel/cordova/plugin" />
+        </platform>
+    </plugin>

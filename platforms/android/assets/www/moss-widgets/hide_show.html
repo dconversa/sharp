@@ -1,0 +1,10 @@
+<a href="#" onclick="$('.hideshow').prop('checked',true).checkboxradio('refresh');" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-i18n="@ZZX">Select All</a>
+<a href="#" onclick="$('.hideshow').prop('checked',null).checkboxradio('refresh');" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-i18n="@ZZY">Deselect All</a>
+<fieldset data-role="controlgroup">
+    <legend data-i18n="@ZZZ">Set visible Persons</legend>
+    {{ for (var i=0; i<Moss.model.surveys.length; i++)  { }}
+        <label>{{=Moss.model.surveys[i].personName || 'Person #' + i }}<input id="hide_show_{{=i}}" 
+            class="hideshow" data-idx="{{=i}}" type="checkbox" {{?Moss.model.surveys[i].visible==true}}checked="true"{{?}}/></label>
+    {{ } }}
+</fieldset>
+

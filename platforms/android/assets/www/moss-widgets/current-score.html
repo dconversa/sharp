@@ -1,0 +1,56 @@
+{{ var scoring = it[Moss.model.cqid + "._scoring"]; }}
+{{?scoring && scoring.score_components  && scoring.score_components.length > 0}}
+<table>
+    <tbody>
+        <tr style="height: 40px; vertical-align: top">
+            <th colspan="2">{{=Moss.fn.string('@SSS')}} - {{=Moss.fn.string(Moss.fn.currentQuestion().title)}}</th>
+        </tr>
+        <!--20170724 was  scoring.score_components.length > 1 -->
+        {{? scoring.score_components.length > 0 }}
+            {{~scoring.score_components :comp:index}}
+                {{ var last = (index === scoring.score_components.length -1); }}
+            <tr>
+                <td style="font-style: italic; font-size: 0.8em;">[{{=index+1}}] - </span>{{=Moss.fn.string(comp.label)}}</td>
+                <td align="right" style="font-style: italic; font-size: 0.8em;" >{{=comp.value || '0' }}  {{?last}}={{??}}+{{?}}</td>
+            </tr>
+            {{~}}
+            <tr>
+                <td style="font-style: italic; font-size: 0.8em;" data-i18n="@CCT">Calculated total</td>
+                <td align="right" style="border-top: thin solid black; font-style: italic; font-size: 0.8em;" >{{=scoring.score_calculated_sum || '0'}} &divide;</td>
+            </tr>
+            <tr>
+                <td style="font-style: italic; font-size: 0.8em;" data-i18n="@NSC">Number of scoring components</td>
+                <td align="right" style=" font-style: italic; font-size: 0.8em;" >{{=scoring.number_of_score_components || '0'}} =</td>
+            </tr>
+            <tr style="font-size: 0.9em;">
+                <td style="font-weight: bold" data-i18n="@CCS">Calculated Score:</td>
+                <td align="right" style="border-top: thin solid black;">{{=scoring.score_calculated || '0'}} +</td>
+            </tr>
+        {{??}}
+            {{? scoring.score_components.length === 1 }}
+            <tr style="font-size: 0.9em;vertical-align: bottom">
+                <td>
+                    {{=Moss.fn.string(scoring.score_components[0].label)}} <br/><br/>
+                    <span style="font-weight: bold" data-i18n="@CCS">Calculated Score</span>
+                </td>
+                <td align="right">{{=scoring.score_calculated || '0'}} +</td>
+            </tr>
+            {{?}}
+        {{?}}
+        <tr style="font-size: 0.9em;">
+            <td style="font-weight: bold" data-i18n="@AQS">Adequacy Score:</td>
+            <td align="right">{{=scoring.score_adequacy || '0'}} +</td>
+        </tr>
+        <tr style="font-size: 0.9em;">
+            <td style="font-weight: bold" data-i18n="@AIS">Importance Score:</td>
+            <td align="right">{{=scoring.score_importance || '0'}} =</td>
+        </tr>
+        <tr style="height:40px; padding-top: 10px;">
+            <td style="font-weight: bold" data-i18n="@FQS">Final Question Score:</td>
+            <td align="right" style="border-top: thin solid black;font-weight: bold">{{=scoring.score_final || '0'}} &nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+{{??}}
+<p  data-i18n="@NSI">No scoring information</p>
+{{?}}

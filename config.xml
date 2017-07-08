@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.fao.sharp.eth" version="2.0.9" android-versionCode="44" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>SHARP ETH</name>
+    <description>
+       Self-evaluation and Holistic Assessment of climate Resilience of farmers and Pastoralists (SHARP)
+    </description>
+    <!--<author  email="daniele.conversa@fao.org" href="http://www.fao.org">
+        FAO of the UN
+    </author>
+    -->
+    <content src="index.html" />
+    <access origin="*" />
+	
+    <icon src="res/icon.png" />
+	<preference name="splashscreen" value="splash" />
+	<preference name="SplashScreenDelay" value="5000" />
+    <preference name="orientation" value="landscape" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+</widget>

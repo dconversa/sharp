@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>    
+    <body>
+
+    <div id="survey-scoring"  data-role="page">
+              
+        <div id="header" data-role="header" data-theme="a" class="fao-bar" data-position="fixed" data-tap-toggle="false" style="height: 46px !important">
+            <a href="survey-edit.html" class="ui-btn ui-icon-sback ui-btn-icon-notext ui-nodisc-icon" style="height:32px" onclick="saveSurveyComments()" data-i18n="@BSX">Back</a>            
+            <h2 class="fao-bar" style="font-weight: normal; font-size: 1.2em" data-i18n="@SIS">Individual Scoring</h2>            
+            <div id="navbar-scoring" data-role="navbar" data-type="horizontal" style="margin-bottom:0px;background-color: #f9f9f9;border-radius:0px"></div> 
+        </div>
+        
+        <div data-role="content">
+
+            <!-- VMT start reporting dashboard -->
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+            <!-- Optional theme -->
+            <link href="./font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+            <!-- SHARP custom fonts -->
+            <link href="./sharp-noun-iconic-font/sharp.css" rel="stylesheet">
+
+            <!-- custom CSS -->
+            <link rel="stylesheet" href="./css/custom.css">
+            <div class="container">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="page-header"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="widget-toolbar" class="col-md-12">
+                            <div class="row">
+                                <!--<div class="col-md-3">
+                                    <label for="sorting" data-i18n="@SRP">Respondent</label>
+                                    <select id="respondent" name="sorting" class="dropdown">                                   
+                                    </select>
+                                </div>
+                                -->
+                                <div class="col-md-3">
+                                    <label for="sorting" data-i18n="@_sort_by">Sort by</label>
+                                    <select id="sorting" name="sorting" class="dropdown"> <!-- removed class="form-control" clashing with jquery-mobile theme -->
+                                        <i class="fa fa-sort-amount-desc" order="desc"></i><option value="score_final:desc" data-i18n="@SSD"> Scoring (descending)</option>
+                                        <i class="fa fa-sort-amount-asc" order="asc"></i><option value="score_final:asc" data-i18n="@SSA"> Scoring (ascending)</option>
+                                        <i class="fa fa-sort-amount-desc" order="desc"></i><option value="score_calculated:desc" data-i18n="@SSX"> Scoring (descending w/o self assessment)</option>
+                                        <i class="fa fa-sort-amount-asc" order="asc"></i><option value="score_calculated:asc" data-i18n="@SSY"> Scoring (ascending w/o self assessment)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="direction">&nbsp;</label>
+                                    <select id="direction" name="direction"> <!-- removed class="form-control"  -->
+                                        <option value="top:all" data-i18n="@STA">All</option>
+                                        <option value="top:5" data-i18n="@STF">Top 5</option>
+                                        <option value="top:10" data-i18n="@STT">Top 10</option>
+                                        <option value="bottom:5" data-i18n="@SBF">Bottom 5</option>
+                                        <option value="bottom:10" data-i18n="@SBT">Bottom 10</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="expand-collapse-button">&nbsp;</label>
+                                    <button id="expand-collapse-button" name="expand-collapse-button" class="ui-button" status="collapsed" title="Expand all questions" data-i18n="@SEA">
+                                        <i class="fa fa-folder-open"></i> Expand all
+                                    </button>
+                                </div>
+                              <!--  
+                                <div class="col-md-3">
+                                    <label for="certificate">&nbsp;</label>
+                                    <button id="certificate" name="certificate" class="ui-button" data-i18n="@SRC"><i class="fa fa-certificate"></i> Request certificate</button>
+                                </div>
+                                -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <label for="survey_comments" data-i18n="@SGC">General comments for current survey</label>
+                                            <textarea id="survey_comments" name="survey_comments"></textarea>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="grouping" data-i18n="@SCT">Comparing to </label>
+                                            <select id="grouping" name="grouping">
+                                                <option value="all" data-i18n="@STA">All</option>
+                                                <option value="male" data-i18n="@SML">Male (gender)</option>
+                                                <option value="female" data-i18n="@SFM">Female (gender)</option>
+                                                <option value="farmer" data-i18n="@VSV">Farmer (practice)</option>
+                                                <option value="pastoralist" data-i18n="@KTO">Pastoralist (practice)</option>
+                                                <option value="agropastoralist" data-i18n="@QBE">Agro-Pastoralist (practice)</option>
+                                                <option value="certified" data-i18n="@S0_INFO_01_certified">Certified</option>
+                                                <option value="conventional" data-i18n="@S0_INFO_01_conventional">Conventional</option>
+                                                
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section id="widget-grid" class="hide">
+                    <div class="row">
+                        <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+                            <div id="wid-id-1" class="jarviswidget jarviswidget-pixel">
+                                <header id="wid-id-1-header" role="heading" class="panel-header-box row">
+                                    <div class="panel-header hidden-xs col-md-1">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <div id="panel-header" class="panel-header col-md-7"></div>
+                                    <div id="panel-status" class="panel-status col-md-4"></div>
+                                </header>
+                                <section role="content" class="row">
+                                    <div id="wid-body-1" class="widget-body col-md-12" style="padding-left: 0px; padding-right: 0px;">
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row charts">
+                                <div id="bottom-center-chart" class="col-md-12 sharp-chart well hide">
+                                </div>
+                            </div>
+                            <div class="row charts">
+                                <div id="bottom-center-chart2" class="col-md-12 sharp-chart well hide">
+                                </div>
+                            </div>
+                            <div class="row charts">
+                                <div id="bottom-center-chart3" class="col-md-12 sharp-chart well hide">
+                                </div>
+                            </div>
+                            <!--
+                            <div class="row charts">
+                                <div id="group-chart" class="col-md-12 sharp-chart well hide">
+                                </div>
+                            </div>
+                            -->
+                            <div class="row charts">
+                                <div id="bottom-left-chart" class="col-md-6 sharp-chart well hide">
+                                </div>
+                                <div id="bottom-right-chart" class="col-md-6 sharp-chart well hide">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            
+        <!-- Latest compiled and minified JavaScript -->        
+        
+                 
+        <script src="js/chart.js"></script>
+        <script src="js/sharp-scoring.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+       
+        <!-- <script src="./js/sharp-dictionary-1.0.js"></script> -->
+        <!-- <script src="./js/surveys-stub.js"></script> -->
+        <!--<script src="./js/sharp-scoring.js"></script>-->
+
+        <!-- VMT end reporting dashboard -->
+            
+        </div>
+
+
+    </div>
+    </body>
+
+</html>

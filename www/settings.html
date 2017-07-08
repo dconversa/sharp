@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+
+<body>
+    <div id="settings" data-role="page">
+
+       <!-- 
+        <div id="sg-edit" data-role="popup" data-position-to="window" data-theme="a" style="min-width:400px;" data-dismissible="false">
+            <div data-role="header" data-theme="b">
+                <h5 id="sg-edit-title"  data-i18n="@_new_ffs">New FFS</h5>
+            </div>
+            <div role="main" class="ui-content">
+                <label for="sg_name"  data-i18n="@_school_name">School Name </label>
+                <input id="sg_name" type="text" placeHolder="Please type FFS's name"  data-i18n="@_ffs_name"/>                    
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <button id="btn-save" value="Save" class="ui-btn ui-btn-inline ui-btn-a ui-corner-all ui-shadow" data-i18n="@_save">Save</button>
+            </div>
+        </div>
+        -->
+        <div data-role="header" data-theme="a" class="fao-bar" data-position="fixed">
+
+            <a href="index.html" class="ui-btn ui-icon-shome ui-btn-icon-notext ui-nodisc-icon" style="height:32px" data-i18n="@_menu">Menu</a>
+            <h2 class="fao-bar" style="font-weight: normal; font-size: 1.2em" data-i18n="@_settings">Settings</h1>
+
+        </div>
+        
+        <div data-role="content">
+            <div class="ui-corner-all custom-corners">
+              <div class="ui-bar ui-bar-b">
+                <h3 class="fao-light-text" data-i18n="@_account_settings" >Account Settings</h3>
+              </div>
+              <div class="ui-body ui-body-a">
+                <label for="user-name" style="font-weight:bold;" data-i18n="@_full_name">Full name (Last name, First name)</label><input type="text" id="user-name" />
+                <label for="user-id" style="font-weight:bold;" data-i18n="@_user_id">User-ID (provided by the System Administrator)</label><input type="text" id="user-id" autocapitalize="off" />
+                <label for="api-key" style="font-weight:bold;" data-i18n="@_app_key">Application Key (provided by the System Administrator)</label><input type="password" id="api-key" autocapitalize="off"/>
+                <label for="rememberCredentials" style="font-weight:bold;" data-i18n="@_remember_credentials">Remember credentials</label><input type="checkbox" id="rememberCredentials" />
+                <label for="endpoint" style="font-weight:bold;" data-i18n="@_server_address">Server Address (test only)</label><input type="text" id="endpoint" />
+                <a href="#" onclick="Moss.fn.updateDictionaries();" data-role="button" class="ui-btn ui-btn-inline ui-btn-a ui-icon-refresh ui-btn-icon-left" data-i18n="@_update_dictionaries">Update dictionaries</a>           
+                <a href="#" onclick="Moss.fn.loadDictionaries();" data-role="button" class="ui-btn ui-btn-inline ui-btn-a ui-icon-refresh ui-btn-icon-left" data-i18n="@_restore_dictionaries">Restore dictionaries</a>           
+                <a href="#" onclick="Moss.fn.loadDatabase();" data-role="button" class="ui-btn ui-btn-inline ui-btn-a ui-icon-refresh ui-btn-icon-left" data-i18n="@_load_database">Load database</a>                              
+                </div>
+            </div>            
+            
+            <div class="ui-corner-all custom-corners" style="margin-top:20px">
+              <div class="ui-bar ui-bar-b">
+                <h3 class="fao-light-text" data-i18n="@_my_ffs">My Farm Field Schools</h3>
+              </div>
+              <div class="ui-body ui-body-a">
+                <!--<a href="#" onclick="Moss.fn.newSGPopup();" data-role="button"   class="ui-btn ui-btn-inline ui-btn-a ui-icon-plus ui-btn-icon-left" data-i18n="@_add_new_ffs">Add New FFS</a>               -->
+                <table id="sg-list-table" class="display cell-border" style="margin-top:0px!important">
+                    <thead>
+                        <th data-i18n="@_school_name">School Name</th>
+                        <th style="width:60px" data-i18n="@_delete">Delete</th>
+                    </thead>
+                    <tbody id="sg-list-tbody">
+                    </tbody>
+                </table>
+                <a href="#" onclick="Moss.fn.deleteAllSurveys();" data-role="button" class="ui-btn ui-btn-inline ui-btn-a ui-icon-delete ui-btn-icon-left" data-i18n="@_delete_all_surveys">Delete All Surveys</a>               
+              </div>
+            </div>
+        
+            <br/><br/>
+            <div class="ui-corner-all custom-corners" style="margin-top:20px">
+                <div class="ui-bar ui-bar-b">
+                    <h3 class="fao-light-text" data-i18n="@BJ4I">List of Persons</h3>
+                </div>
+                <div class="ui-body ui-body-a">
+                    <!--<a href="#" onclick="Moss.fn.newSGPopup();" data-role="button"   class="ui-btn ui-btn-inline ui-btn-a ui-icon-plus ui-btn-icon-left" data-i18n="@_add_new_ffs">Add New FFS</a>               -->
+                    <table id="sg-persons-list-table" class="display cell-border" style="margin-top:0px!important">
+                        <thead>
+                            <th data-i18n="@_id">ID</th>
+                            <th data-i18n="@_pid">Person Identifier</th>
+                            <th data-i18n="@_lastname">Last name</th>
+                            <th data-i18n="@_firstname">First name</th>                            
+                            <th style="width:60px" data-i18n="@_delete">Delete</th>
+                        </thead>
+                        <tbody id="sg-persons-list-tbody">
+                        </tbody>
+                    </table>                    
+                </div>
+            </div>
+
+        </div>
+        
+</body>
+
+</html>

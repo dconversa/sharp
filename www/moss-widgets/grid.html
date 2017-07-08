@@ -1,0 +1,35 @@
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+<table id="{{=it.id}}" class="table-stroke table-stripe" style="table-layout: fixed;width:100%">
+	<thead>
+		<tr>
+			{{~it.cols :col:index}}
+			  {{?!col.inner}}
+				<th {{?col.style}}style="{{=col.style}}"{{?}}>
+                    {{?col.required}}<span class="required">* </span>{{?}}
+                    {{=Moss.fn.string(col.label) || ''}}</th>
+			  {{??}}
+			  	{{ col.inner.id = it.id + ":col:" + col.id ; }}
+			  	<th>{{=Moss.ui[col.inner.widget].tpl(col.inner)}}</th>
+			  {{?}}
+			{{~}}
+		</tr>
+	</thead>
+	<tbody>
+		{{~it.rows :row:r_index}}
+			<tr>
+				{{~it.cols :col:c_index}}
+					{{  var _align= col.align;
+						if (!_align && c_index==0) _align='left';
+						else if (!_align) _align='middle';
+					}}
+					<td style="vertical-align:middle;" align="{{=_align}}">
+                        {{?row.required && c_index === 0}}<span class="required">* </span>{{?}}
+						{{ var item = row.cells[c_index]? row.cells[c_index]: col.defaultCell;}}
+						{{=Moss.ui.renderCell (item, it, r_index, c_index)}}
+					</td>
+				{{~}}
+			</tr>
+		{{~}}
+	</tbody>
+</table>
+</div>

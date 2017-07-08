@@ -1,0 +1,31 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+<fieldset data-role="controlgroup"{{?!it.vertical}} data-type="horizontal"{{?}}>
+	<legend style="font-weight:bold;">
+        {{?it.required}}<span class="required">* </span>{{?}}
+        {{=Moss.fn.string(it.label) || ''}}
+    </legend>
+	{{~it.options :opt:index}}
+	<label {{? it.style}} style="{{=it.style}}"{{?}}>{{=Moss.fn.string(opt.label)}}
+		<input id="{{=_wid+':'+opt.value}}" {{?opt.hide || opt.hide===true}}type="hidden" {{??!opt.hide  || opt.hide ===false}}type="radio"{{??}}{{?}}  name="{{=_wid}}"{{?index==0}} data-moss="widget"{{?}} data-moss-label-key="{{=opt.label}}" 
+		 	{{?it.onchange || it.fireChange}} onchange="{{=(it.onchange+';') || ''}};{{?it.fireChange}}Moss.fn.fireChange(this);{{?}}"{{?}}
+			value="{{=opt.value}}" onclick="this.focus();Moss.ui.toggleOptTextRadio(this,'{{=_wid}}', {{=(opt.addText===true)}});" 
+              {{?opt.checked}} checked="checked"{{?}} {{?opt.disabled}} disabled{{?}}
+               />
+	</label>
+    
+	{{~}}
+</fieldset>
+{{~it.options :opt:index}}
+    {{?opt.addText}}
+        <input id="{{=_wid+':'+opt.value+':text'}}" data-moss-radiogroup="{{=_wid}}" data-moss="widget" type="text" 
+            placeholder="{{=Moss.fn.string(opt.label)}}" style="display:none" {{?opt.checked}} checked="checked"{{?}} {{?opt.disabled}} disabled{{?}}/>
+    {{?}}
+{{~}}	
+{{?it.tip}}
+<p style="font-size:0.85em;font-style:italic">{{=Moss.fn.string(it.tip)}}</p>
+{{?}}
+    
+    
+    
+</div>

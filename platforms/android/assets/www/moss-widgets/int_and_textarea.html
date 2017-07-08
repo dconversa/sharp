@@ -1,0 +1,19 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+{{?it.order=="it" || !it.order}}
+<label style="font-weight:bold">{{=Moss.fn.string(it.intLabel) || ''}}<input id="{{=_wid}}:int" type="number" data-moss="widget" value=""></label>
+<label style="font-weight:bold">
+    {{?it.required}}<span class="required">* </span>{{?}}
+    {{=Moss.fn.string(it.textareaLabel) || ''}}
+    <textarea id="{{=_wid}}:txt" data-moss="widget"></textarea>
+</label>
+{{?}}
+{{?it.order=="ti"}}
+<label style="font-weight:bold">
+     {{?it.required}}<span class="required">* </span>{{?}}
+    {{=Moss.fn.string(it.textareaLabel) || ''}}   
+    <textarea id="{{=_wid}}:txt" data-moss="widget"></textarea>
+</label>
+<label style="font-weight:bold">{{=Moss.fn.string(it.intLabel) || ''}}<input id="{{=_wid}}:int" type="number" data-moss="widget" value=""></label>
+{{?}}
+</div>

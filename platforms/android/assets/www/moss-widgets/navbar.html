@@ -1,0 +1,48 @@
+{{ for(var i in Moss.model.surveys) { }}
+{{ 
+    var _icons = ['icon-file', 'icon-pencil', 'icon-checkbox-checked']; 
+    var _status = Moss.fn.questionStatus(Moss.model.currentQuestionIdx,i);
+
+}}
+{{? it.scoring}}
+  <button {{?!Moss.model.surveys[i].visible}} disabled="true"{{?}} id="navbar-{{=i}}" 
+   		class="ui-btn ui-btn-a {{? i==Moss.model.currentSurveyIdx}}ui-btn-active{{?}}" onclick="Moss.fn.switchToSurvey({{=i}}); extractCurrentData();">
+   		<table><tr style="vertical-align:middle"><td><span class="{{=_icons[_status] || ''}}"/></td>
+   			<td>{{=Moss.model.surveys[i].personName || ('Person #' + (parseInt(i)+1)) }}</td></tr></table>
+   </button>
+<a href="#" style="height:46px;width:36px;margin-left:30px">  </a>
+{{?}}
+{{? it.survey}}
+    <button {{?!Moss.model.surveys[i].visible}} disabled="true"{{?}} id="navbar-{{=i}}" 
+   		class="ui-btn ui-btn-a {{? i==Moss.model.currentSurveyIdx}}ui-btn-active{{?}}" onclick="Moss.fn.switchToSurvey({{=i}});">
+   		<table><tr style="vertical-align:middle"><td><span class="{{=_icons[_status] || ''}}"/></td>
+   			<td>{{=Moss.model.surveys[i].personName || ('Person #' + (parseInt(i)+1)) }}</td></tr></table>
+   </button>
+{{?}}
+{{ } }}
+
+{{? it.scoring}}
+  <button {{?!Moss.model.surveys[i].visible}} disabled="true"{{?}} id="navbar-fs" 
+   		class="ui-btn ui-btn-a" onclick="extractFFSData();">
+   		<table><tr style="vertical-align:middle"><td><span /></td>
+   			<td>{{=Moss.model.superGroupId}}</td></tr></table>
+   </button>
+<a href="javascript:void(0);" style="height:46px;width:36px;margin-left:30px">  </a>
+{{?}}
+
+
+{{? it.survey}}
+<a href="#" onclick="Moss.fn.addSurvey();" class="ui-btn ui-icon-add-user ui-nodisc-icon ui-btn-icon-notext" 
+   style="height:36px;width:36px;margin-left:30px">Add</a>
+{{?}}
+<table style="float:right; margin-right:5px !important;">
+	<tr style="vertical-align:middle">
+		<td><p style="color:navy">
+            {{=Moss.fn.currentSuperGroupName() || ''}} / 
+            {{=Moss.model.groupName || 'Please set Group/Session Name'}}
+            </p>
+        </td>
+	</tr>
+</table>
+	
+

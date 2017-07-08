@@ -1,0 +1,40 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        }
+    },
+    "dependent_plugins": {
+        "com.chasenoel.cordova.plugin.file-checksum": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        },
+        "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "org.fao.sharp.eth"
+        }
+    }
+}

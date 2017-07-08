@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+<head>
+    <title>SHARP</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+<!--
+  * The "meta viewport" tag (below) helps your app size appropriately to a device's screen.
+  * Note that the meta viewport approach is being phased out in favor of the @viewport CSS rule.
+  * For a quick overview of both, see this article:
+  *   http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag
+  * To see what happens, try the app on a real device with and without a "meta viewport" tag.
+-->
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=2"> -->
+
+    <style>
+    /* following three (cascaded) are equivalent to above three meta viewport statements */
+    /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html */
+    /* see http://dev.w3.org/csswg/css-device-adapt/ */
+        @-ms-viewport { width: 100vw ; zoom: 100% ; }                           @viewport { width: 100vw ; zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; }                                    @viewport { user-zoom: fixed ; }
+        /*@-ms-viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }   @viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }*/        
+        
+        .metro-btn {
+            #font-size: 1em!important;            
+            #font-weight: 100!important;
+            #height: 80px;
+            color: white!important;
+            text-shadow: none!important
+        }
+        
+        .fao-popup-hdr {«
+            background-color: #2E7DCC!important;
+            color: white!important;
+            text-shadow: none!important;
+        }
+
+        .fao-bar {
+            background-color: #5C98D7!important;
+            color: white!important;
+            text-shadow: none!important;
+        }        
+        
+        .fao-bar-button {
+            background-color: #2E7DCC!important;
+            color: white!important;
+            text-shadow: none!important;
+            font-size: 1.1em!important;
+            font-weight: normal!important;
+        }
+        
+        .fao-nav-button {
+            background-color: #e59830!important;
+            color: black!important;
+            text-shadow: 0 1px 0 #c0c0c0!important;
+            font-size: 1.2em!important;
+            font-weight: bold!important;
+        }
+        
+        .fao-light-text {
+            text-shadow: none!important;
+            font-weight: normal!important;
+        }
+        
+        .ui-icon-menu {
+            border: none!important;
+            background-color: transparent!important;
+            background-size: 32px 32px!important;
+            background: url("./images/menu.png") no-repeat!important;      
+            width: 32px!important;
+            height: 32px!imporant;
+        }
+
+        .ui-icon-shome {
+            border: none!important;
+            background-color: transparent!important;
+            background-size: 32px 32px!important;
+            background: url("./images/home.png") no-repeat!important;      
+            width: 32px!important;
+            height: 32px!imporant;
+        }
+
+        .ui-icon-sback {
+            border: none!important;
+            background-color: transparent!important;
+            background-size: 32px 32px!important;
+            background: url("./images/back.png") no-repeat!important;      
+            width: 32px!important;
+            height: 32pdax!imporant;
+        }
+        
+        .ui-icon-suser {
+            border: none!important;
+            background-color: transparent!important;
+            background-size: 32px 32px!important;
+            background: url("./images/user.png") 50% 50% no-repeat!important;      
+            width: 32px!important;
+            height: 32px!imporant;
+        }
+        
+        .ui-icon-add-user {
+            border: none!important;
+            background-color: transparent!important;
+            background-size: 32px 32px!important;
+            background: url("./images/add_user.png") 50% 50% no-repeat!important;      
+            width: 32px!important;
+            height: 32px!imporant;
+        }
+        
+        .ui-icon-loading {
+            background: url(./css/themes/images/ajax-loader.gif)!important;
+        }
+        
+        #div-participants{
+          margin-bottom:50px;
+        }
+        
+        #participants .ui-controlgroup-controls {
+            overflow-y: auto;
+            height:200px;
+        }
+        
+        .tab {
+            /*width: 16.6% !important;*/
+            width: 20% !important;
+            clear: none !important;  /* Prevent line break */
+        }
+             
+    </style>
+    <link rel="stylesheet" href="./css/themes/fao-theme.css" />
+    <link rel="stylesheet" href="./css/themes/jquery.mobile.icons-1.4.5.min.css" />
+    <link rel="stylesheet" href="./css/jquery.mobile.structure-1.4.5.min.css">
+    <link rel="stylesheet" href="./css/jquery-ui.min.css" >
+    <link rel="stylesheet" href="./css/jquery.dataTables.min.css">
+    <!--<link rel="stylesheet" href="./css/responsive.dataTables.min.css">-->
+    <link rel="stylesheet" href="./css/icon-pack-custom.css">
+    <link rel="stylesheet" href="./css/toastr.css" />
+    <link rel="stylesheet" href="./css/sharp.css" />
+    <!-- SHARP custom fonts -->
+    <link href="./font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./sharp-noun-iconic-font/sharp.css" rel="stylesheet">
+
+    <script src="js/doT.min.js"></script>
+  
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>    
+
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <!--<script src="js/dataTables.responsive.min.js"></script>-->
+    
+    <script src="js/jquery.websql.min.js"></script>
+    <script src="js/jszip.min.js"></script>    
+    <script src="js/sticky-table-headers.js"></script>
+    <script src="js/toastr.js"></script>
+
+    <script src="js/moss.js"></script>
+    <script src="surveys/sharp-1.0.js"></script>
+    <script src="js/sha1.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <!-- New Survey Export Popup Dialog -->
+        
+    <div id="surveys-export-dialog" data-role="popup" data-history="false" data-position-to="window"  data-overlay-theme="b" data-theme="a" data-dismissible="false" style="min-width: 600px">
+
+            <input type="hidden" id="surveyId" name="surveyId"> 
+            <div data-role="header" data-theme="b" class="fao-popup-hdr">
+                <h1 data-i18n="@_survey_export">Survey export:</h1>
+            </div>
+            <div role="main" class="ui-content">
+
+                    <label for="select-survey-schema-export" >
+                        <span class="required">* </span> <span data-i18n="@_sharp_version_select">Please select SHARP Version:</span>
+                    </label>
+                    <select id="select-survey-schema-export"></select>
+                    <fieldset data-role="controlgroup">
+                        <legend ><span class="required">* </span>Export type</legend>
+                            <input type="radio" name="export-type" id="export-type-scores" value="scores" checked="checked">
+                            <label for="export-type-scores" data-i18n="@_export_surveys_s">Scores</label>
+                            <input type="radio" name="export-type" id="export-type-full" value="full">
+                            <label for="export-type-full" data-i18n="@_export_surveys_f">Full</label>                        
+                    </fieldset>                    
+            </div>
+            <div data-role="navbar" >
+                <ul>
+                    <li><button id="btn-surveys-export-dialog-close" data-icon="arrow-l" data-i18n="@_cancel">Cancel</button></li>
+                    <li><button id="btn-surveys-export-dialog-export" data-icon="arrow-r" data-i18n="@_export_survey">Export</button></li>
+                </ul>
+            </div>                
+    </div>
+    <div id="home" data-role="page">
+       <!-- <div id="sg-edit" data-role="popup" data-position-to="window" data-theme="a" style="min-width:400px;" data-dismissible="false">
+            <div data-role="header" data-theme="b">
+                <h5 id="sg-edit-title"  data-i18n="@_new_ffs">New FFS</h5>
+            </div>
+            <div role="main" class="ui-content">
+                <label for="sg_name"  data-i18n="@_school_name">School Name </label>
+                <input id="sg_name" type="text" placeHolder="Please type FFS's name"  data-i18n="@_ffs_name"/>                    
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-i18n="@_cancel">Cancel</a>
+                <button id="btn-save" value="Save" class="ui-btn ui-btn-inline ui-btn-a ui-corner-all ui-shadow" data-i18n="@_save">Save</button>
+            </div>
+        </div>
+        -->                      
+        <!-- New Survey Select Popup Dialog -->
+               
+        <div id="survey-type-select" data-role="popup"  data-position-to="window"  data-overlay-theme="b" data-theme="a" data-dismissible="false" style="min-width: 600px">
+            <div data-role="header" data-theme="b" class="fao-popup-hdr">
+                <h1 data-i18n="@_sharp_version">SHARP Version:</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <label for="select-survey-schema-update" ><span class="required">* </span><span data-i18n="@_sharp_version_select">Please select SHARP Version:</span></label><select id="select-survey-schema-update"></select>
+            </div>
+            <div data-role="navbar" >
+                <ul>
+                    <li><button onclick="$('#survey-type-select').popup('close')" data-icon="arrow-l" data-i18n="@_cancel">Cancel</button></li>
+                    <li><button onclick="Moss.fn.updateSurvey()" data-icon="arrow-r" data-i18n="@_next">Next</button></li>
+                </ul>
+            </div>                
+        </div>
+        
+        <!-- New Survey Popup Dialog -->        
+        <div id="survey-new" data-role="popup" data-position-to="window"  data-overlay-theme="b" data-theme="a" data-dismissible="false" style="min-width: 640px">
+           <div data-role="header" data-theme="b" class="fao-popup-hdr">
+                <h1 data-i18n="@_new_survey">New Survey</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="hidden" id="opttpl" value="sharp-1.0-full"/>                   
+
+                <label for="select-survey-schema"><span class="required">* </span><span  data-i18n="@_sharp_version">SHARP Version:</span></label><select id="select-survey-schema"></select>                   
+                    <legend ><span class="required">* </span><span data-i18n="@_ap_ffs">Agro-pastoral/farmer field school:</span> </legend>
+                    <div class="ui-grid-a ui-responsive" >
+                        <div class="ui-block-a" style="width:60%">
+                            <input type="text"   id="sg_name"   data-i18n="@_ffs_name" placeholder="Please type FFS's name"/>
+                        </div>
+                        <div class="ui-block-b" style="width:40%">
+                            <button  id="btnAddFfs"  data-icon="plus" value="Add AP/FFS"  data-mini="true"   data-i18n="@_add_new_ffs"/>
+                        </div>                                                                        
+                    </div>    
+                    <div class="ui-grid-solo">
+                        <div class="ui-block-a"><select id="supergroup-new"></select></div>
+                    </div>
+                    
+                     <div class="ui-grid-solo">
+                        <div class="ui-block-a"><label for="gname" ><span class="required">* </span><span data-i18n="@_gsn">Group or Session Name: </span></label><input id="gname" type="text" /></div>
+                    </div>
+
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend><span class="required">* </span><span  data-i18n="@_number_of_p_qsts">Number of Parallel Questionnaires</span></legend>
+                    <label for="rdnq1">1</label>
+                    <input id="rdnq1" type="radio" name="rd-nq" value="1" checked="checked" />
+                    <label for="rdnq2">2</label>
+                    <input id="rdnq2" type="radio" name="rd-nq" value="2" />
+                    <label for="rdnq3">3</label>
+                    <input id="rdnq3" type="radio" name="rd-nq" value="3" />
+                    <label for="rdnq4">4</label>
+                    <input id="rdnq4" type="radio" name="rd-nq" value="4" />
+                    <label for="rdnq5">5</label>
+                    <input id="rdnq5" type="radio" name="rd-nq" value="5" />
+                    <label for="rdnq6">6</label>
+                    <input id="rdnq6" type="radio" name="rd-nq" value="6" />
+                    <label for="rdnq7">7</label>
+                    <input id="rdnq7" type="radio" name="rd-nq" value="7" />
+                    <label for="rdnq8">8</label>
+                    <input id="rdnq8" type="radio" name="rd-nq" value="8" />					
+                </fieldset>
+
+                <div data-role="navbar" style="margin-top: 20px;">
+                    <ul>
+                        <li><button onclick="$('#survey-new').popup('close')" data-icon="arrow-l" data-i18n="@_cancel">Cancel</button></li>
+                        <li><button onclick="Moss.fn.startSurvey()" data-icon="arrow-r" data-i18n="@_next">Next</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>  
+             <!--  data-hide-during-focus="input, textarea" could be added for a bug on how chrome 50 manages select when these hide the header and footer. Theydon't work properly, blinking and not allowing selection of options 
+            see https://github.com/jquery/jquery-mobile/issues/8429
+        -->
+        <div data-role="header">
+            <table style="width:100%; margin:0px; padding:0px;background-color: #5C98D7">
+                <tbody style="color:white;text-shadow: none;">
+                    <tr>
+                        <td style="width:100px;"><!--<img id="img_fao_logo" src="images/FAO-logo-en-w.png"/> --></td>                
+                        <td style="text-align:right">
+                            <!--<img id="img_sharp_header" src="images/sharp_header_en.png" height="80px" />-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+              <!--  <div class="ui-bar">
+                    <label for="select-choice-1" class="ui-hidden-accessible">Shipping:</label>
+                    <select name="select-choice-1" id="select-choice-1" data-mini="true" data-inline="true">
+                        <option value="standard">Standard: 7 day</option>
+                        <option value="rush">Rush: 3 days</option>
+                        <option value="express">Express: next day</option>
+                        <option value="overnight">Overnight</option>
+                    </select>
+                </div>
+                 -->    
+                 <!--
+              <div data-role="navbar" data-iconpos="left">
+                <ul>
+                    <li><a href="#" data-icon="grid">Summary</a></li>
+                    <li><a href="#" data-icon="star" >Favs</a></li>
+                    <li><a href="#" data-icon="gear">Setup</a></li>
+                </ul>
+            </div>
+                /navbar -->
+              <div data-role="navbar" data-iconpos="left">
+                  <ul>
+                    <li class="tab"><a href="#" id="btnNewSurvey" onclick="Moss.fn.newSurvey();"  class="metro-btn" style="background-color:#50A716;" data-icon="plus" data-i18n="@_new_survey">New Survey</a></li>                    
+                    <li class="tab"><a href="#" id="btnUploadSurveys" onclick="Moss.fn.sendAll()" class="metro-btn" style="background-color:#50A716;" data-icon="mail"  data-i18n="@_upload_surveys">Upload Surveys</a></li>                      
+                    <li class="tab"><a href="#" id="btnUploadPictures" onclick="Moss.fn.uploadPictures()" class="metro-btn" style="background-color:#50A716;"  data-icon="arrow-u" data-i18n="@_upload_pictures">Upload Pictures</a></li>
+                    <!--<li class="tab"><a href="#" id="btnAttendanceReportSearch" onclick="Moss.fn.attendanceReportSearch()" class="metro-btn" style="background-color:#50A716;"  data-icon="grid" data-icon="grid" data-i18n="@_attendance_report">Attendance Report>Setup</a></li>-->
+                    <li class="tab"><a href="#" id="btnExportSurvey" onclick="Moss.fn.exportSurveys();" class="metro-btn" style="background-color:#3076bf;" data-icon="arrow-d" data-i18n="@_export_surveys">Export Surveys</a></li>
+                    <!--
+                    <li class="tab"><a href="#" id="btnExportSurveyFull" onclick="Moss.fn.exportSurveyToCSV();" class="metro-btn" style="background-color:#3076bf;" data-icon="arrow-d" data-i18n="@_export_surveys_f">Export Surveys (full)</a></li>
+                    <li class="tab"><a href="#" id="btnExportSurveyScore" onclick="Moss.fn.exportSurveyScoreToCSV();" class="metro-btn" style="background-color:#3076bf;"  data-icon="arrow-d" data-i18n="@_export_surveys_s">Export Surveys (score)</a></li>                                        
+                   
+                    <li class="tab"><a href="#" id="btnBluetooth" onclick="Moss.fn.bluetooth();" class="metro-btn" style="background-color:#e06411;" data-icon="gear" data-i18n="@_bluetooth">Bluetooth</a></li>                      
+                    -->
+                    <li class="tab"><a href="#" id="btnSettings" onclick="Moss.fn.settings();" class="metro-btn" style="background-color:#e06411;" data-icon="gear" data-i18n="@_settings">Settings</a></li>                      
+                </ul>
+                    <!--<ul>
+                        <li >
+                            <button id="btnNewSurvey" onclick="Moss.fn.newSurvey();"
+                                data-corners="false" class="metro-btn" style="background-color:#50A716;" 
+                                data-icon="plus" data-i18n="@_new_survey">New Survey</button>
+                        </li>
+                        <li >
+                            <button id="btnUploadSurveys" onclick="Moss.fn.sendAll()" 
+                                data-corners="false" class="metro-btn" style="background-color:#3076bf;" 
+                                data-icon="mail" data-i18n="@_upload_surveys">Upload Surveys</button>
+                        </li>
+                        <li >
+                 
+                            <button id="btnExportSurveyFull" onclick="Moss.fn.exportSurveyToCSV();"
+                                data-corners="false" class="metro-btn" style="background-color:#50A716;" 
+                                data-icon="arrow-d" data-i18n="@_export_surveys_f">Export Surveys (full)</button>      
+                        </li>
+                        <li >
+                            <button id="btnExportSurveyScore" onclick="Moss.fn.exportSurveyScoreToCSV();"
+                                data-corners="false" class="metro-btn" style="background-color:#50A716;" 
+                                data-icon="arrow-d" data-i18n="@_export_surveys_s">Export Surveys (score)</button>      
+                        </li>
+                        <li >
+                            <button id="btnUploadPictures" onclick="Moss.fn.uploadPictures()" 
+                                data-corners="false"  class="metro-btn" style="background-color:#3076bf;" 
+                                data-icon="arrow-u" data-i18n="@_upload_pictures">Upload Pictures</button>
+                        </li>
+                        <li >
+                            <button id="btnAttendanceReportSearch" onclick="Moss.fn.attendanceReportSearch()"  
+                                    data-corners="false" class="metro-btn" style="background-color:#3076bf;" 
+                                    data-icon="grid" data-i18n="@_attendance_report">Attendance Report</button>
+                        </li>
+                        <li >
+                            <button id="btnSettings" onclick="Moss.fn.settings();" 
+                                data-corners="false" class="metro-btn" style="background-color:#e06411;" 
+                                data-icon="gear" data-i18n="@_settings">Settings</button>
+                        </li>                               
+                    </ul>
+                    -->
+                </div>                     
+        </div>
+
+        <div data-role="content">
+            <div id="moss-message">
+            </div>
+            <table id="survey-list-table" class="display cell-border">
+            </table>    
+        </div>
+        
+        <div data-role="footer" class="fao-bar" data-position="fixed">
+            <!--<a href="#" onclick="Moss.fn.about()" data-icon="info" style="margin-left:10px;" class="fao-bar-button" data-i18n="@_about">About SHARP</a>-->
+            <fieldset data-theme="c" data-role="controlgroup" data-type="horizontal" style="float:left; margin: 10px; margin-right:40px !important; ">                      
+                <div id="div-about"></div>
+            </fieldset>
+            <fieldset data-theme="c" data-role="controlgroup" data-type="horizontal" style="float:right; margin: 10px; margin-right:40px !important; ">
+                <label>English<input id="lang_en" type="radio" name="rd_main_lang" value="en" onchange="Moss.fn.changeLanguage();"/></label>
+                <label>Français<input id="lang_fr" type="radio" name="rd_main_lang" value="fr" onchange="Moss.fn.changeLanguage();" /></label>
+               <!-- <label>Português<input id="lang_pt" type="radio" name="rd_main_lang" value="pt" onchange="Moss.fn.changeLanguage();" /></label>
+                <label>Español<input id="lang_es" type="radio" name="rd_main_lang" value="es" onchange="Moss.fn.changeLanguage();"/></label> -->
+            </fieldset>
+        </div>
+    </div>
+    
+    <div id="attendance-report-search" data-url="attendance-report-search" data-role="page">
+                
+        <div data-role="popup" id="attendance-report-new" data-position-to="window"  data-theme="a" data-dismissible="false" style="min-width: 600px;">	
+
+            <div data-role="header" class="fao-popup-hdr">
+                <h1 data-i18n="@_new_attendance_report">New Attendance Report</h1>
+            </div>
+            <div role="main" class="ui-content" style="padding-top: 2px;">
+                <form id="form-attendance-report-new">    
+                    <div class="ui-grid-a" style="margin-top: 2px;">
+                        <div class="ui-block-a">                        
+                            <label for="startDatePopup"><span class="required" >* </span><span data-i18n="@_start_date">Start Date</span></label> 
+                            <input id="startDatePopup" name="startDatePopup" type="date" data-role="date"   >                                                   
+                        </div>
+                        <div class="ui-block-b">                                                        
+                            <label for="endDatePopup"><span class="required" >* </span><span data-i18n="@_end_date">End Date</span></label> 
+                            <input id="endDatePopup" name="endDatePopup"  type="date" data-role="date" >                                                        
+                        </div>
+                    </div><!-- /grid-a -->
+
+                    <div class="ui-field-contain" style="margin-top: 2px;">
+                        <label for="ffsPopup"><span class="required">* </span><span data-i18n="@_ffs">FFS/Community</span></label> 
+                        <select name="ffsPopup" id="ffsPopup">            
+                        </select>
+                    </div>
+                    
+                    <div class="ui-field-contain" id="div-participants" class="participantFieldsetScroll" style="max-height: 150px;">
+                    </div>	
+                </form>
+                <div data-role="navbar" style="margin-top: 106px;">
+                    <ul>
+                        <li><button onclick="$('#attendance-report-new').popup('close')" data-icon="arrow-l" data-i18n="@_cancel">Cancel</button></li>
+                        <li><button onclick="Moss.fn.createAttendanceReport()" data-icon="arrow-r" data-i18n="@_next">Next</button></li>
+                    </ul>
+                </div>
+            </div>
+                           	
+        </div>
+        <!-- new attendance report popup end -->
+        <div data-role="header" data-theme="a" class="fao-bar" data-position="fixed">
+
+            <a href="index.html" class="ui-btn ui-icon-shome ui-btn-icon-notext ui-nodisc-icon" style="height:32px" data-i18n="@_menu">Menu</a>
+            <h2 class="fao-bar" style="font-weight: normal; font-size: 1.2em" data-i18n="@_attendance_report">Attendance Report</h2>
+
+        </div>
+        <!-- /header -->
+        <div data-role="content">
+            <form id="form-report-search">
+                <div class="ui-field-contain">
+                    <label for="input-start-date-search" data-i18n="@_start_date">Start Date</label> 
+                    <input id="input-start-date-search" name="input-start-date-search" type="date" data-role="date"  > 
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="input-end-date-search" data-i18n="@_end_date">End Date</label> 
+                    <input id="input-end-date-search" name="input-end-date-search" type="date" data-role="date"  > 
+                </div>
+                <div class="ui-field-contain">
+                    <label for="select-ffs-search" data-i18n="@_ffs">FFS/Community</label> 
+                    <select	name="select-ffs-search" id="select-ffs-search">		
+                    </select>
+                </div>  
+                <div class="ui-field-contain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend></legend>
+                        <a id="btn-report-search"  class="fao-bar-button ui-btn ui-icon-search ui-btn-icon-right ui-btn-inline ui-shadow ui-corner-all" data-i18n="@_search">Search</a>
+                        <a id="btn-reset-report-search"  class="fao-bar-button ui-btn ui-icon-delete ui-btn-icon-right ui-btn-inline ui-shadow ui-corner-all" data-i18n="@_reset">Reset</a>
+                        <a id="btn-new-report" class="fao-bar-button ui-btn ui-icon-plus ui-btn-icon-right ui-btn-inline ui-shadow ui-corner-all" data-i18n="@_new_attendance_report">New Report</a>
+                    </fieldset>
+                </div>
+                </form>
+                <table id="datatable-attendance-report-search" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th data-i18n="@_ffs">FFS</th>
+                            <th data-i18n="@_start_date">Start Date</th>
+                            <th data-i18n="@_end_date">End Date</th>
+                            <th data-i18n="@_description">Description</th>
+                            <th data-i18n="@_delete">Delete</th>
+                        </tr>
+                    </thead>                
+                </table>            
+        </div>
+        <script src="js/attendance-report.js"></script> 
+        <!-- /content -->
+
+        <div data-role="footer" class="fao-bar" data-position="fixed">
+
+        </div>
+        <!-- /footer -->
+    </div>
+    
+
+    <!-- IMPORTANT: Do not include your weinre script tag as part of your release builds! -->
+    <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work below -->
+    <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+
+    <!-- See <head> section above for additional JS libraries loaded as part of this application. -->
+
+    <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls -->
+    <script src="js/index.js"></script>          <!-- phantom library, needed for Cordova api calls -->    
+    <script src="js/highcharts-all.js"></script>
+    <script src="js/highcharts-exporting.js"></script>
+
+</body>
+
+</html>

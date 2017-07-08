@@ -1,0 +1,50 @@
+<div class="ui-bar ui-bar-b">
+    <h3 style="font-weight: normal; text:shadow: none" data-i18n="@_questionnaire_status">Questionnaire Status</h3>
+</div>
+<div width="100%" class="ui-body ui-body-b">
+    <table align="center" style="border-spacing: 0;">
+{{ 
+    var _statusBackgroundColors =  ["#362e58","#eded1d","#98d67f", "#ffffff"] ;
+    var _statusColors = ["#d9d7d7", "black","black", "navy"] ;
+    var _col = 0;
+}}
+
+{{for(i=0; i<Moss.model.survey.questions.length; i++){ }}
+	{{? _col % 8 === 0 && _col>0}} 
+        </tr>
+    {{?}}   	
+	{{? _col % 8 === 0 || _col == 0}} 
+        <tr>
+    {{?}}   	
+            {{ var _status = Moss.fn.questionStatus(i); 
+               var _titleStyle = Moss.model.survey.config.titleStyles[Moss.model.survey.questions[i].style];
+            }}
+            
+            <td style="padding: 0px!important; {{=_titleStyle}}">
+                <a href="#" onclick="Moss.fn.jumpToQuestion({{=i}});" 
+                class="ui-btn ui-mini fao-light-text" 
+                style="font-size:0.83em;background-color:{{=_statusBackgroundColors[_status]}};color:{{=_statusColors[_status]}}">
+                {{? Moss.model.survey.questions[i].sensitive}}
+                    <span class="ui-icon-lock ui-btn-icon-notext" style="position:relative;margin-right:11px" />
+                {{?}}
+                <span>{{=(i+1)}}</span>{{? Moss.model.survey.questions[i].required}}<span style="font-weight:bold;"> *</span>{{??}}&nbsp;{{?}}
+                </a></td>
+            {{ _col++; }}
+{{ } }}
+        </tr>
+        <tr>
+            <td colspan="8" style="font-size:0.8em;background-color:#f0f0f0;padding:10px">
+                <span style="color:black" data-i18n="@_legend">Legend:</span>
+                <span style="padding:4px;background-color:{{=_statusBackgroundColors[0]}};color:{{=_statusColors[0]}};border: 1px solid black;" data-i18n="@_no_data">No data</span>
+                <span style="padding:4px;background-color:{{=_statusBackgroundColors[1]}};color:{{=_statusColors[1]}};border: 1px solid black;" data-i18n="@_partially_completed">Partially completed</span>
+                <span style="padding:4px;background-color:{{=_statusBackgroundColors[2]}};color:{{=_statusColors[2]}};border: 1px solid black;" data-i18n="@_completed">Completed</span>
+                <span style="padding:4px;background-color:{{=_statusBackgroundColors[3]}};color:{{=_statusColors[3]}};border: 1px solid black;" data-i18n="@_not_applicable">Not applicable</span>
+                <br/><span height="10px"/><br>
+                <span style="color:black;font-style: italic" >* = </span><span style="color:black;font-style: italic" data-i18n="@_required_question">Required question</span>
+                <span>&nbsp;</span>
+                <span class="ui-icon-lock ui-btn-icon-notext" style="color:black;position:relative;margin-right:15px; margin-left:15px" />
+                <span style="color:black;font-style: italic"> = </span><span style="color:black;font-style: italic" data-i18n="@_sensitive_question">Sensitive question</span>
+            </td>
+        </tr>
+    </table>
+</div>

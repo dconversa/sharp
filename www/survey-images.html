@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="survey-images" data-url="progress-page" data-role="page">
+
+      
+    <div data-role="header" data-theme="a" class="fao-bar" data-position="fixed">
+        <a href="survey-edit.html" class="ui-btn ui-icon-sback ui-btn-icon-notext ui-nodisc-icon" style="height:32px" data-i18n="@BSX">Back</a>
+        <h2 class="fao-bar" style="font-weight: normal; font-size: 1.2em" data-i18n="@WBA">Pictures</h1>
+    </div>
+        
+
+    <div data-role="content">
+                <label data-i18n="@WBC">Add Your pictures to this question </label>
+                <button id="btn-photo-camera" class="fao-bar-button" data-icon="info" onclick="Moss.fn.getPicture(1);" data-iconpos="right" data-role="button"  data-i18n="@2E29">Take picture</button>
+                <button id="btn-photo-album" class="fao-bar-button" data-icon="info" onclick="Moss.fn.getPicture(0);" data-iconpos="right" data-role="button"  data-i18n="@33DI">Select picture</button>
+               
+                <div class="ui-grid-a" id="question-pictures" >
+                 <!-- TESTONLY
+                    <div class="ui-block-a" style="width: 30%; height: 175px; padding: 5px; overflow: hidden;">                       
+                        <img src="./images/test.jpg" style="width: 100%"/>
+                    </div>
+                  
+                      <div class="ui-block-b"  style="width: 70%; height: 175px; padding: 5px;">                        
+                        <textarea style="height: 90% !important"></textarea>
+                    </div>
+                  
+                     <div class="ui-block-solo">
+                        <a href="#" data-role="button" data-icon="delete">First Column Button</a><br>                        
+                    </div>
+                 -->
+                </div>
+               
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-history="false" data-i18n="@_cancel">Cancel</a>
+                <a href="#" onclick="Moss.fn.setCurrentSurveyPictures();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back" data-history="false" data-transition="flow">Ok</a>                    
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

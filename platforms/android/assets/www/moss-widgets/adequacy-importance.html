@@ -1,0 +1,77 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+
+    <div class="ui-body ui-body-a ui-corner-all" style="background-color: #D3E3DF; margin-top: 20px">
+
+        <fieldset data-role="controlgroup" data-type="horizontal">
+            <legend style="font-weight:bold;">
+                <span class="required">* </span>
+                {{=Moss.fn.string(it.labelAdequacy) || ''}}
+            </legend>
+            <label>{{=Moss.fn.string('@_not_at_all')}}
+                <input onclick="this.focus()" id="{{=_wid+':ad_0'}}" type="radio" name="{{=_wid}}:adq" data-moss="widget" data-moss-label-key="@_not_at_all" value="0"  />
+            </label>
+            <label>{{=Moss.fn.string('@_a_little')}}
+                <input onclick="this.focus()"  id="{{=_wid+':ad_1'}}" type="radio" name="{{=_wid}}:adq" data-moss="widget" data-moss-label-key="@_a_little" value="2.5"  />
+            </label>
+            <label>{{=Moss.fn.string('@_average')}}
+                <input onclick="this.focus()"  id="{{=_wid+':ad_2'}}" type="radio" name="{{=_wid}}:adq" data-moss="widget" data-moss-label-key="@_average" value="5"  />
+            </label>
+            <label>{{=Moss.fn.string('@_a_lot')}}
+                <input onclick="this.focus()" id="{{=_wid+':ad_3'}}" type="radio" name="{{=_wid}}:adq" data-moss="widget" data-moss-label-key="@_a_lot" value="7.5"  />
+            </label>
+            <label>{{=Moss.fn.string('@_completely')}}
+                <input onclick="this.focus()" id="{{=_wid+':ad_4'}}" type="radio" name="{{=_wid}}:adq" data-moss="widget" data-moss-label-key="@_completely" value="10"  />
+            </label>
+        </fieldset>
+        
+        <br/>
+        
+        {{?it.labelElaborateAdequacy}}
+          
+         <label style="font-weight:bold;">
+            {{?it.required}}<span class="required">* </span>{{?}}
+            {{=Moss.fn.string(it.labelElaborateAdequacy) || ''}}
+            <textarea id="{{=_wid+':elaborate_adequacy'}}" data-moss="widget" autocomplete="off" autocorrect="off" 
+              autocapitalize="off" spellcheck="false"></textarea>
+        </label>
+        
+        {{?}}
+        
+        <fieldset data-role="controlgroup" data-type="horizontal">
+            <legend style="font-weight:bold;">
+                <span class="required">* </span>
+                {{=Moss.fn.string(it.labelImportance) || ''}}
+            </legend>
+            <label>{{=Moss.fn.string('@_not_at_all')}}
+                <input onclick="this.focus()" id="{{=_wid+':imp_0'}}" type="radio" name="{{=_wid}}:imp" data-moss="widget" data-moss-label-key="@_not_at_all" value="10"  />
+            </label>
+            <label>{{=Moss.fn.string('@_a_little')}}
+                <input onclick="this.focus()" id="{{=_wid+':imp_1'}}" type="radio" name="{{=_wid}}:imp" data-moss="widget" data-moss-label-key="@_a_little" value="7.5"  />
+            </label>
+            <label>{{=Moss.fn.string('@_average')}}
+                <input onclick="this.focus()" id="{{=_wid+':imp_2'}}" type="radio" name="{{=_wid}}:imp" data-moss="widget" data-moss-label-key="@_average" value="5"  />
+            </label>
+            <label>{{=Moss.fn.string('@_a_lot')}}
+                <input onclick="this.focus()" id="{{=_wid+':imp_3'}}" type="radio" name="{{=_wid}}:imp" data-moss="widget" data-moss-label-key="@_a_lot" value="2.5"  />
+            </label>
+            <label>{{=Moss.fn.string('@_very')}}
+                <input onclick="this.focus()" id="{{=_wid+':imp_4'}}" type="radio" name="{{=_wid}}:imp" data-moss="widget" data-moss-label-key="@_very" value="0"  />
+            </label>
+        </fieldset>
+
+        {{?it.labelElaborateImportance}}
+              <label style="font-weight:bold;">
+            {{?it.required}}<span class="required">* </span>{{?}}
+            {{=Moss.fn.string(it.labelElaborateImportance) || ''}}
+            <textarea id="{{=_wid+':elaborate_importance'}}" data-moss="widget" autocomplete="off" autocorrect="off" 
+              autocapitalize="off" spellcheck="false"></textarea>
+        </label>
+        
+        {{?}}
+        
+        
+        </div>
+    
+</div>

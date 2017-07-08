@@ -1,0 +1,13 @@
+{{
+var _wid = Moss.model.cqid + '.' + it.id, defaultValue;
+defaultValue = it.defaultValue? Moss.fn.evalExpression(it.defaultValue) : null;
+var _onchg = Moss.fn.concat (";", [it.onchange, it.fireChange ? "Moss.fn.fireChange(this)" : null]);
+}}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+
+    <input id="{{=_wid}}" type="hidden" data-moss="widget" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+	value="{{=defaultValue || ''}}" {{?_onchg}} onchange="{{=_onchg}};"{{?}}
+    style="{{=it.style || ''}}">
+
+</div>
+

@@ -1,0 +1,22 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<table style="cell-spacing: 10px;" >
+    <tbody>
+    <tr style="vertical-align: bottom">
+        <td>
+            <label style="font-weight:bold;">
+                {{?it.required}}<span class="required">* </span>{{?}}
+                {{=Moss.fn.string(it.labelLat) || 'Latitude'}}<input id="{{=_wid}}:lat" type="number" data-moss="widget" value="">
+            </label>
+        </td>
+        <td>
+            <label style="font-weight:bold;">
+                {{?it.required}}<span class="required">* </span>{{?}}
+                {{=Moss.fn.string(it.labelLon) || 'Longitude'}}<input id="{{=_wid}}:lon" type="number" data-moss="widget" value=""></textarea>
+            </label>        
+        </td>
+        <td>
+            <a href="#" onclick="Moss.fn.setGPS('{{=_wid}}')" data-role="button" data-icon="location">{{=Moss.fn.string(it.label) || 'Get GPS coordinates'}}</a>
+        </td>
+    </tr>
+    </tbody>        
+</table>

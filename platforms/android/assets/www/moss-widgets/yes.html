@@ -1,0 +1,11 @@
+{{var _wid = Moss.model.cqid + '.' + it.id; }}
+<div {{?it.hideIf}} data-moss-hideIf="{{=it.hideIf}}"{{?}}>
+<div style="height:5px;" />
+{{?it.label}}<p style="font-weight:bold;">{{=Moss.fn.string(it.label) || ''}}</p>{{?}}
+<fieldset data-role="controlgroup" data-type="horizontal" {{?it.label}}style="margin-left:20px"{{?}} class="yes{{?it.class}} {{=it.class}}{{?}}">
+    <input id="{{=_wid}}" type="checkbox" data-mini="true" data-moss="widget" style="width:32px;height:32px;"
+        value="yes"{{?it.fireChange}} onchange="Moss.fn.fireChange(this);"{{?}} />
+</fieldset>
+<div style="height:14px;" />
+</div>
+ 

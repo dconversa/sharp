@@ -1,0 +1,24 @@
+{{
+    var disablePrev = Moss.model.currentQuestionIdx === 0,
+        disableNext = Moss.model.currentQuestionIdx === (Moss.model.survey.questions.length - 1);
+}}
+
+<div id="navbuttons" data-role="navbar" style="margin-top: 30px;">
+    <ul>
+        <li><button class="fao-nav-button ui-corner-left"{{?disablePrev}} disabled="true"{{?}} 
+                    onclick="Moss.fn.prev()" data-icon="arrow-l" data-role="button" data-i18n="@_prev_question">Previous Question</button></li>
+        {{?disableNext}}
+        <li><a href="survey-scoring.html" class="fao-nav-button ui-corner-right"{{?disableNext}} disabled="true"{{?}} 
+               onclick="Moss.fn.next();" data-icon="bar-chart-o" data-i18n="@_generate_report">Generate Report</a></li>
+        <!-- <a href="javascript:void(0);" class="fao-nav-button ui-corner-right"{{?disableNext}} disabled="true"{{?}} 
+               onclick="Moss.fn.next();location.href='survey-scoring.html'" data-icon="bar-chart-o" data-i18n="@_generate_report">Generate Report</a></li>-->
+        {{??}}
+        <li><button class="fao-nav-button ui-corner-right"{{?disableNext}} disabled="true"{{?}}  id="btn-next"
+                    onclick="Moss.fn.next()" data-icon="arrow-r" data-role="button" data-i18n="@_next_question">Next Question fff</button></li>
+
+        {{?}}
+    </ul>
+</div>
+
+<div id="filler">
+</div>
