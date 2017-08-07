@@ -47,6 +47,25 @@
                                         <i class="fa fa-sort-amount-asc" order="asc"></i><option value="score_final:asc" data-i18n="@SSA"> Scoring (ascending)</option>
                                         <i class="fa fa-sort-amount-desc" order="desc"></i><option value="score_calculated:desc" data-i18n="@SSX"> Scoring (descending w/o self assessment)</option>
                                         <i class="fa fa-sort-amount-asc" order="asc"></i><option value="score_calculated:asc" data-i18n="@SSY"> Scoring (ascending w/o self assessment)</option>
+<!-- 
+[17:20:26] Claire DURAND: calculated + adequacy = resilience score
+[17:20:46] Claire DURAND: importance score (separated)
+
+Academic score  (/10) = sum(score_components)/number_of_score_components
+Importance score      = sum_importance_scores / number_of_importance_scores
+Adequacy score        = sum_adequacy_scores / number_of_adequacy_scores
+Final score  (/30)    = Importance score + adequacy score + academic score
+
+SHARP.JS
+scoring.score_final = Sharp.sum([scoring.score_calculated, scoring.score_adequacy, scoring.score_importance]);
+academic_scoring.score_final = academic_scoring.score_calculated;
+
+separate adequacy and importance score visually
+
+All “importance questions”: the scale should be reversed:
+Not at all = 0 ; a little = 2.5 ; average = 5 ; a lot = 7.5 ; very = 10
+
+-->
                                     </select>
                                 </div>
                                 <div class="col-md-2">

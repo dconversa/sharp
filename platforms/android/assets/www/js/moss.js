@@ -16,7 +16,7 @@ var Moss = (function ($, doT, toastr, JSZip) {
     */
     
     var Moss = {
-        version: "2.0.8",
+        version: "2.0.9",
         surveyNameAndVersion: "sharp-1.0-eth",
         settings: {},
         shared: {},
@@ -1949,7 +1949,7 @@ var Moss = (function ($, doT, toastr, JSZip) {
         try {
             ret = eval(expr);
             if (!ret) {
-                Moss.fn.debug("Validation failed for " + app + " evaluated to " + expr);
+                Moss.fn.log("Validation failed for " + app + " evaluated to " + expr);
             }
             return ret;
         } catch (e) {

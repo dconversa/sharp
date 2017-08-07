@@ -243,7 +243,7 @@ var Sharp = (function ($, Moss, toastr) {
             
             
             tmp = currentAnswers['S4_PSP_01.participation'];
-            if(tmp !== '_not_applicable'){                
+            if (tmp !== '_not_applicable') {
                 Sharp.addScore([scoring, academic_scoring], 'hh_participation', "@S4_PSP_01_participation_msr", (tmp === 'yes' ? 10 : 0));
             }
             
@@ -448,6 +448,7 @@ var Sharp = (function ($, Moss, toastr) {
          *    Crops      *
          *****************/
         case 'S4_PSP_04':
+            var v1, v2, v3, v4;
             tmp = currentAnswers['S4_PSP_04.growing_perennial_crops'];
             if (tmp) {
                 Sharp.addScore([scoring, academic_scoring], 'cp_growing', "@TPI", (tmp === 'yes' ? 10 : 0));
@@ -463,11 +464,22 @@ var Sharp = (function ($, Moss, toastr) {
             
                  
             //count rows that have varieties >1
-            tmp1 = Moss.fn.sum(/^S4_PSP_04\.crops.*#varieties$/,  currentAnswers);
             
-            
+           
+            //1) make the varieties like: 1,2,3,4+ 
+            //2) score each crops according to the table below
+            //3) sum the scores and divide by the number of crops => 
+            //4) print out the final score as average of the scores
+            v1 = Moss.fn.count(/^S4_PSP_04\.crops.*#varieties$/, "1", currentAnswers);
+            v2 = Moss.fn.count(/^S4_PSP_04\.crops.*#varieties$/, "2", currentAnswers);
+            v3 = Moss.fn.count(/^S4_PSP_04\.crops.*#varieties$/, "3", currentAnswers);
+            v4 = Moss.fn.count(/^S4_PSP_04\.crops.*#varieties$/, "4", currentAnswers);
+            tmp1 = v1 + v2 + v3 + v4;
+            tmp = ((v1 * ZERO) + (v2 * 4) + (v3 * 8) + (v4 * 10)) / tmp1;
+            Sharp.addScore([scoring, academic_scoring], 'cp_has_vars', "@S4_PSP_04_corps_varieties_msr", tmp);
+                
             //tmp1 = Moss.fn.sum(/^S4_PSP_04\.crops#.*#varieties$/, currentAnswers);
-            if (tmp > 0) {
+           /*if (tmp > 0) {
                 tmp1 = Math.round(tmp1 / tmp);
                
                 Sharp.addScore([scoring, academic_scoring], 'cp_has_vars', "@S4_PSP_04_corps_varieties_msr",  Sharp.addScore([scoring, academic_scoring], 'cp_vars', "@Y0B", Sharp.rangeScale(tmp1, [
@@ -476,7 +488,9 @@ var Sharp = (function ($, Moss, toastr) {
                     {threshold: 3, value: 8},
                     {threshold: Number.POSITIVE_INFINITY, value: 10}
                 ])));
-            }
+            }*/
+            
+           
             
             Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_PSP_04.adeq_imp");
             break;
@@ -490,7 +504,7 @@ var Sharp = (function ($, Moss, toastr) {
                 _N,
                 _D,
                 app;
-            
+            //1= 0, 2= 3, 3= 6, 4=8,5+= 10
             tmp = currentAnswers['S4_PSP_05.animals'];
             if (tmp === 'yes') {
                 app = Moss.fn.count(/^S4_PSP_05\.lvst_practices#qty#.*$/, undefined, currentAnswers);
@@ -499,8 +513,9 @@ var Sharp = (function ($, Moss, toastr) {
 
                     tmp1 = Sharp.rangeScale(app, [
                         {threshold: 1, value: 0},
-                        {threshold: 2, value: 4},
-                        {threshold: 3, value: 7},
+                        {threshold: 2, value: 3},
+                        {threshold: 3, value: 6},
+                        {threshold: 4, value: 8},
                         {threshold: Number.POSITIVE_INFINITY, value: 10}
                     ]);
                     Sharp.addScore([scoring, academic_scoring], 'ls_practices', Moss.fn.string("@PRU"), tmp1);
@@ -509,31 +524,47 @@ var Sharp = (function ($, Moss, toastr) {
 
                 //tmp = Moss.fn.sum(/^S4_PSP_05\.lvst_practices#breeds#.*$/, currentAnswers);//Moss.fn.countConditionalValue(/^S4_PSP_05\.lvst_practices#breeds#.*$/, /^0*[2-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*$/, currentAnswers);
                 //changed oherwise it would count also txt giving nan
-                tmp = Moss.fn.sum(/^S4_PSP_05\.lvst_practices#breeds#.*:(!txt)$/, currentAnswers);
+               //
+                
+                /*
+                1= 0
+                2= 4
+                3= 8 
+                4+=10
+                */
+                
+                v1 = Moss.fn.count(/^S4_PSP_05\.lvst_practices.*#breeds/, "1", currentAnswers);
+                v2 = Moss.fn.count(/^S4_PSP_05\.lvst_practices.*#breeds/, "2", currentAnswers);
+                v3 = Moss.fn.count(/^S4_PSP_05\.lvst_practices.*#breeds/, "3", currentAnswers);
+                v4 = Moss.fn.count(/^S4_PSP_05\.lvst_practices.*#breeds/, "4", currentAnswers);
+                tmp1 = v1 + v2 + v3 + v4;
+                tmp = ((v1 * ZERO) + (v2 * 4) + (v3 * 8) + (v4 * 10)) / tmp1;
+                
+               /* tmp = Moss.fn.sum(/^S4_PSP_05\.lvst_practices#breeds#.*$/, currentAnswers);
                 tmp1 = Sharp.rangeScale(tmp, [
                     {threshold: 0, value: 0},
                     {threshold: 5, value: 3},
                     {threshold: 10, value: 8},
                     {threshold: Number.POSITIVE_INFINITY, value: 10}
-                ]);
-                Sharp.addScore([scoring, academic_scoring], 'ls_breeds', "@YO4", tmp1);
+                ]);*/
+                Sharp.addScore([scoring, academic_scoring], 'ls_breeds', "@YO4", tmp);
                 //1-5= 3, 6-10= 8, 11+= 10 
 
                 
                 a = Moss.fn.count(/^S4_PSP_05\.lvst_practices#pas#.*$/, 'yes', currentAnswers);
                 b = Moss.fn.count(/^S4_PSP_05\.lvst_practices#pas#.*$/, 'no', currentAnswers);
                 c = Moss.fn.count(/^S4_PSP_05\.lvst_practices#pas#.*$/, '_not_applicable', currentAnswers);
-                if((a + b) >0){ //means that some questions have been answered
+                if ((a + b) > 0) { //means that some questions have been answered
                     tmp = (a + b) > 0 ? (a + b) : 1;
                     tmp1 = (a * 10) / tmp;
-                    Sharp.addScore([scoring, academic_scoring], 'lvst_pas', "@S4_PSP_05_pas_msr", tmp1);    
+                    Sharp.addScore([scoring, academic_scoring], 'lvst_pas', "@S4_PSP_05_pas_msr", tmp1);
                 }
                 
 
                 a = Moss.fn.count(/^S4_PSP_05\.lvst_practices#roel#.*$/, 'yes', currentAnswers);
                 b = Moss.fn.count(/^S4_PSP_05\.lvst_practices#roel#.*$/, 'no', currentAnswers);
                 c = Moss.fn.count(/^S4_PSP_05\.lvst_practices#roel#.*$/, '_not_applicable', currentAnswers);
-                if((a + b) >0){
+                if ((a + b) > 0) {
                     tmp = (a + b) > 0 ? (a + b) : 1;
                     tmp1 = (a * 10) / tmp;
                     Sharp.addScore([scoring, academic_scoring], 'lvst_roel', "@S4_PSP_05_roel_msr", tmp1);
@@ -567,7 +598,7 @@ var Sharp = (function ($, Moss, toastr) {
             // # of different foods with same function
             tmp = currentAnswers["S4_PSP_07.nutri_cattle"];
             if (tmp) {
-                tmp = 0;
+             //   tmp = 0;
            
             //tmp = Moss.fn.countTokenizedText(/^S4_PSP_07\.animal_nutrition#food_suppl_dscr#.*$/, currentAnswers);
             // (including grazing)
@@ -582,7 +613,7 @@ var Sharp = (function ($, Moss, toastr) {
                     {threshold: 3, value: 7},
                     {threshold: Number.POSITIVE_INFINITY, value: 10}
                 ]));
-            }  
+            }
             tmp = (grazing / totalNumberOfAnimalCategories) * 10;
             Sharp.addScore([scoring, academic_scoring], 'an_grazing',  "@XJH", tmp);
             // }
@@ -624,7 +655,7 @@ var Sharp = (function ($, Moss, toastr) {
             }
                 
             tmp = currentAnswers['S4_PSP_07.nutri_poultry'];
-            if(tmp != '_not_applicable'){
+            if (tmp !== '_not_applicable') {
                 Sharp.addScore([scoring, academic_scoring], 'an_nutri_poultry',  "@S4_PSP_07_nutri_poultry", (tmp === 'yes' ? 10 : 0));
             }
             
@@ -689,7 +720,10 @@ var Sharp = (function ($, Moss, toastr) {
                 myscore,
                 hasAnswered = false,
                 use_new_varieties_15yrs = 0,
-                use_new_varieties_30yrs = 0;
+                use_new_varieties_30yrs = 0,
+                perc15yrs,
+                perc30yrs,
+                score2;
                                 
             count = 0;
             tmp = 0;
@@ -699,6 +733,15 @@ var Sharp = (function ($, Moss, toastr) {
                 //Sharp.addScore([scoring, academic_scoring], 'ub_specs_15', "@T4B", 0);
       
                 tmp = Moss.fn.sum(/^S4_PSP_09\.crop_imprv_perc/, undefined, currentAnswers);
+                if (tmp) {
+                    perc15yrs = Sharp.rangeScale(tmp, [
+                        {threshold: 25, value: 10},
+                        {threshold: 50, value: 6},
+                        {threshold: 75, value: 3},
+                        {threshold: 90, value: 1},
+                        {threshold: 100, value: 0}
+                    ]);
+                }
                 count++;
                 hasAnswered = true;
             } else if (currentAnswers['S4_PSP_09.use_new_varieties_15yrs'] === 'dontknow') {
@@ -710,6 +753,7 @@ var Sharp = (function ($, Moss, toastr) {
                 tmp = 0;
                 use_new_varieties_15yrs = 10;
                 hasAnswered = true;
+                count++;
             }
                 
             if (currentAnswers['S4_PSP_09.use_new_varieties_30yrs'] === 'yes') {
@@ -717,6 +761,15 @@ var Sharp = (function ($, Moss, toastr) {
              
                 count++;
                 tmp1 = Moss.fn.sum(/^S4_PSP_09\.breed_non_lcl_perc/, undefined, currentAnswers);
+                if (tmp1) {
+                    perc30yrs = Sharp.rangeScale(tmp1, [
+                        {threshold: 25, value: 10},
+                        {threshold: 50, value: 6},
+                        {threshold: 75, value: 3},
+                        {threshold: 90, value: 1},
+                        {threshold: 100, value: 0}
+                    ]);
+                }
                 hasAnswered = true;
             } else if (currentAnswers['S4_PSP_09.use_new_varieties_30yrs'] === 'dontknow') {
                 //Sharp.addScore([scoring, academic_scoring], 'ub_specs_30', "@SNH", 0);
@@ -729,8 +782,19 @@ var Sharp = (function ($, Moss, toastr) {
                 //Sharp.addScore([scoring, academic_scoring], 'ub_specs_30', "@SNH", 10);
                 use_new_varieties_30yrs = 10;
                 hasAnswered = true;
+                count++;
             }
-            if (count > 0 && hasAnswered) {
+                //should not sum the percentages but the score of the signle questions divided by the number of questions (percentages)
+                //instead of 80+30 should be 6 +1 divided by 2
+            if (perc15yrs !== undefined && perc30yrs !== undefined) {
+                myscore = (perc15yrs + perc30yrs) / 2;
+                Sharp.addScore([scoring, academic_scoring], 'ub_new_varieties_msr', "@UNQ", myscore);
+            } else if (perc15yrs !== undefined) {
+                Sharp.addScore([scoring, academic_scoring], 'ub_new_varieties_msr', "@UNQ", perc15yrs);
+            } else if (perc30yrs !== undefined) {
+                Sharp.addScore([scoring, academic_scoring], 'ub_new_varieties_msr', "@UNQ", perc30yrs);
+            }
+            /*if (count > 0 && hasAnswered) {
                 if (count > 0) {
                     myscore = Sharp.rangeScale((((tmp + tmp1) / count)), [
                         {threshold: 25, value: 10},
@@ -741,7 +805,7 @@ var Sharp = (function ($, Moss, toastr) {
                     ]);
                     Sharp.addScore([scoring, academic_scoring], 'ub_new_varieties_msr', "@UNQ", myscore);
                 }
-            }
+            }*/
             if (hasAnswered) {
                 Sharp.addScore([scoring, academic_scoring], 'ub_no_lcl', "@S4_PSP_09_new_varieties_msr", ((use_new_varieties_15yrs + use_new_varieties_30yrs) / (count > 0 ? count : 1)));
             }
@@ -806,7 +870,7 @@ var Sharp = (function ($, Moss, toastr) {
             //Use of natural products from trees	
             //# of uses of tree products for: Natural remedies (animals);Natural remedies (people); Products for the protection of crops (e.g. Neem)	0= 0, 1= 7, 2+= 10
             // //S4_PSP_10.trees_nat_use:no_use   
-            if (currentAnswers['S4_PSP_10.trees_nat_present'] && currentAnswers['S4_PSP_10.trees_nat_present'] != '0') {
+            if (currentAnswers['S4_PSP_10.trees_nat_present'] && currentAnswers['S4_PSP_10.trees_nat_present'] !== '0') {
                 Sharp.addScore([scoring, academic_scoring], 'ta_trees_nat_use',  "@S4_PSP_10_trees_nat_use_msr", Sharp.rangeScale(
                     Moss.fn.count(/^S4_PSP_10\.trees_nat_use:.*$/, true, currentAnswers),
                     [
@@ -1029,7 +1093,7 @@ var Sharp = (function ($, Moss, toastr) {
                 ]));
              */
             tmp = currentAnswers['S4_PSP_15.methods'];
-            if(!tmp){
+            if (!tmp) {
                 tmp = 0;
             }
             
@@ -1049,7 +1113,7 @@ var Sharp = (function ($, Moss, toastr) {
          ********************************/
         case 'S4_PSP_16':
             tmp = currentAnswers['S4_PSP_16.use_pest_ctrl'];
-            if (tmp && tmp === 'yes') {
+            if (tmp === 'yes') {
                 //S4_PSP_16.pest_ctrl_practices:crop_rotation
                 tmp = Moss.fn.count(/^S4_PSP_16\.pest_ctrl_practices:.*/, true, currentAnswers);
                 //tmp = currentAnswers['S4_PSP_16.number_of_types'];
@@ -1066,6 +1130,9 @@ var Sharp = (function ($, Moss, toastr) {
                     {threshold: Number.POSITIVE_INFINITY, value: 10}
                 ]);
                 Sharp.addScore([scoring, academic_scoring], 'pc_practices', "@I4H", tmp1);
+                Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_PSP_16.adeq_imp");
+            } else if (tmp === 'no') {
+                Sharp.addScore([scoring, academic_scoring], 'pc_practices', "@I4H", 0);
                 Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_PSP_16.adeq_imp");
             }
            
@@ -1202,19 +1269,22 @@ var Sharp = (function ($, Moss, toastr) {
         case 'S4_PSP_18':
             // TODO manage academic_scoring
             tmp = currentAnswers['S4_PSP_18.intercropping'];
-            if (tmp) {
-                Sharp.addScore([scoring, academic_scoring], 'intercropping', "@A0E", (tmp === 'yes' ? 10 : 0));
+            if (tmp === "yes") {
+                Sharp.addScore([scoring, academic_scoring], 'intercropping', "@A0E",  10);
+                tmp = currentAnswers['S4_PSP_18.plant_and_aquacltr_intercropping'];
+                if (tmp) {
+                    Sharp.addScore([scoring, academic_scoring], 'intercropping_aquaculture', "@ADG", (tmp === 'yes' ? 10 : 0));
+                }
+                tmp = currentAnswers['S4_PSP_18.intercropping_perc'];
+                if (tmp) {
+                    Sharp.addScore([scoring, academic_scoring], 'intercropping_percentage', "@WZY", (tmp / 10));
+                }
+
+                Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_PSP_18.adeq_imp");
+            } else if (tmp === "no") {
+                Sharp.addScore([scoring, academic_scoring], 'intercropping', "@A0E", 0);
             }
-            tmp = currentAnswers['S4_PSP_18.plant_and_aquacltr_intercropping'];
-            if (tmp) {
-                Sharp.addScore([scoring, academic_scoring], 'intercropping_aquaculture', "@ADG", (tmp === 'yes' ? 10 : 0));
-            }
-            tmp = currentAnswers['S4_PSP_18.intercropping_perc'];
-            if (tmp) {
-                Sharp.addScore([scoring, academic_scoring], 'intercropping_percentage', "@WZY", (tmp / 10));
-            }
-            
-            Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_PSP_18.adeq_imp");
+       
             break;
 
         /**********************        
@@ -1264,8 +1334,8 @@ var Sharp = (function ($, Moss, toastr) {
          **********************/
         case 'S4_ENV_01':
             a = Moss.fn.count(/^S4_ENV_01\.water_access#[0-9]#type_of_wtr_src.*/, undefined, currentAnswers);
-            b = Moss.fn.count(/^S4_ENV_01\.water_access#[0-9]#type_of_wtr_src.*/, 'no_water_access', currentAnswers);    
-            tmp = Sharp.rangeScale((a-b), [
+            b = Moss.fn.count(/^S4_ENV_01\.water_access#[0-9]#type_of_wtr_src.*/, 'no_water_access', currentAnswers);
+            tmp = Sharp.rangeScale((a - b), [
                 {threshold: 0, value: 0},
                 {threshold: 1, value: 2},
                 {threshold: 2, value: 6},
@@ -1311,7 +1381,7 @@ var Sharp = (function ($, Moss, toastr) {
          *    Water quality    *
          ***********************/
         case 'S4_ENV_03':
-            tmp = Moss.fn.count(/^S4_ENV_03\.water_quality#.*#response.*$/, undefined, currentAnswers);    
+            tmp = Moss.fn.count(/^S4_ENV_03\.water_quality#.*#response.*$/, undefined, currentAnswers);
             a = Moss.fn.count(/^S4_ENV_03\.water_quality#.*#response.*$/, 'yes', currentAnswers);
             b = Moss.fn.count(/^S4_ENV_03\.water_quality#.*#response.*$/, 'no', currentAnswers);
             c = Moss.fn.count(/^S4_ENV_03\.water_quality#.*#response.*$/, '_not_applicable', currentAnswers);
@@ -1492,11 +1562,12 @@ var Sharp = (function ($, Moss, toastr) {
          ************************/
         case 'S4_ENV_06':
             tmp = currentAnswers['S4_ENV_06.use_land_improving'];
-            if(tmp === '_not_applicable'){
-                
-            } else if(tmp === 'no'){
-                 Sharp.addScore([scoring, academic_scoring], 'lm_improving', '@XHU', 0);
-                 Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_ENV_06.adeq_imp");
+            if (tmp === '_not_applicable') {
+                //do nothing
+                console.log(tmp);
+            } else if (tmp === 'no') {
+                Sharp.addScore([scoring, academic_scoring], 'lm_improving', '@XHU', 0);
+                Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_ENV_06.adeq_imp");
             } else {
                 var bare_land_perc, covered_land;
                 //TODO    
@@ -1650,7 +1721,7 @@ var Sharp = (function ($, Moss, toastr) {
             //Manure= 4
             //Other options= 3
             //2+= 10 (maximum of 10)
-
+            
             tmp1 = Moss.fn.count(/^S4_ENV_09\.energy_sources#(agri_residues)#.*$/, true, currentAnswers) > 0 ? 4 + tmp1 : tmp1;
             tmp1 = Moss.fn.count(/^S4_ENV_09\.energy_sources#(biogas)#.*$/, true, currentAnswers) > 0 ? 4 + tmp1 : tmp1;
             tmp1 = Moss.fn.count(/^S4_ENV_09\.energy_sources#(charcoal)#.*$/, true, currentAnswers) > 0 ? 2 + tmp1 : tmp1;
@@ -1667,7 +1738,7 @@ var Sharp = (function ($, Moss, toastr) {
             tmp1 = Moss.fn.count(/^S4_ENV_09\.energy_sources#(water)#.*$/, true, currentAnswers) > 0 ? 4 + tmp1 : tmp1;
             tmp1 = Moss.fn.count(/^S4_ENV_09\.energy_sources#(wood_residues)#.*$/, true, currentAnswers) > 0 ? 4 + tmp1 : tmp1;
             tmp1 = Moss.fn.count(/^S4_ENV_09\.energy_sources#(other_specify)#.*$/, true, currentAnswers) > 0 ? 2 + tmp1 : tmp1;
-            
+        
             if (tmp1 >= 7) {
                 tmp1 = 10;
             }
@@ -1693,18 +1764,20 @@ var Sharp = (function ($, Moss, toastr) {
             tmp = Moss.fn.count(/^S4_ENV_09\.energy_sources#(solar|wood_residues|manure|agri_residues|domestic_waste|biogas|water|wind)#.*$/, true, currentAnswers);
             tmp1 = Sharp.rangeScale(tmp, [
                 {threshold: 0, value: 0},
-                {threshold: 1, value: 6},
+                {threshold: 1, value: 4},
+                {threshold: 2, value: 8},
                 {threshold: Number.POSITIVE_INFINITY, value: 10}
             ]);
-            // TODO replace text with i18n
+            
             Sharp.addScore([scoring, academic_scoring], 'es_usage_friendly', '@NOF', tmp1);
-            tmp = Moss.fn.count(/^S4_ENV_09\.energy_sources#(solar|fuel_wood|charcoal|agri_residues|domestic_waste|manure|wood_residues)#.*$/, true, currentAnswers);
+            tmp = Moss.fn.count(/^S4_ENV_09\.energy_sources#(solar|agri_residues|domestic_waste|wood_residues|wind)#.*$/, true, currentAnswers);
             tmp1 = Sharp.rangeScale(tmp, [
                 {threshold: 0, value: 0},
-                {threshold: 1, value: 6},
+                {threshold: 1, value: 4},
+                {threshold: 2, value: 8},
                 {threshold: Number.POSITIVE_INFINITY, value: 10}
             ]);
-            // TODO replace text with i18n
+        
             Sharp.addScore([scoring, academic_scoring], 'es_usage_local', '@NOL', tmp1);
             Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_ENV_09.adeq_imp");
             break;
@@ -1745,9 +1818,10 @@ var Sharp = (function ($, Moss, toastr) {
                 }
                 if (t2 !== '_not_applicable') {
                     Sharp.addScore([scoring, academic_scoring], 'ec_manure_non_liq', "@S4_ENV_10_non_liq_man_stock_msr", "closed" === t2 ? 10 : 0);
+                    Sharp.addScore([scoring, academic_scoring], 'ec_bioplant_use', "@S4_ENV_10_bioplant_use_msr", "yes" === t3 ? 10 : 0);
+                    Sharp.addScore([scoring, academic_scoring], 'ec_bioplant_use_onfarm', "@S4_ENV_10_bioplant_use_onfarm_msr", "yes" === t4 ? 10 : 0);
                 }
-                Sharp.addScore([scoring, academic_scoring], 'ec_bioplant_use', "@S4_ENV_10_bioplant_use_msr", "yes" === t3 ? 10 : 0);
-                Sharp.addScore([scoring, academic_scoring], 'ec_bioplant_use_onfarm', "@S4_ENV_10_bioplant_use_onfarm_msr", "yes" === t4 ? 10 : 0);
+                
             }
             Sharp.addAdequcyImportanceScore(scoring, currentAnswers, "S4_ENV_10.adeq_imp");
             break;
@@ -1976,10 +2050,10 @@ var Sharp = (function ($, Moss, toastr) {
                     Sharp.addScore([scoring, academic_scoring], 'gm_participation', "@S4_SOC_01_know_exchg_msr", tmp1);
                     
                 }
-                Sharp.addScore([scoring, academic_scoring], 'gm_participation', "@S4_SOC_01_know_exchg_msr", tmp1);
+                //Sharp.addScore([scoring, academic_scoring], 'gm_participation', "@S4_SOC_01_know_exchg_msr", tmp1);
             
             } else {
-                  Sharp.addScore([scoring, academic_scoring], 'gm_participation', "@L2C", Sharp.rangeScale(
+                Sharp.addScore([scoring, academic_scoring], 'gm_participation', "@L2C", Sharp.rangeScale(
                     0,
                     [
                         {threshold: 0, value: 0},
@@ -2141,11 +2215,9 @@ var Sharp = (function ($, Moss, toastr) {
                 } else if (tmp === 'frequently') {
                     tmp1 = 10;
                 }
-                
-            } else {
-                tmp1 = 0;
+                Sharp.addScore([scoring, academic_scoring], 'ca_previous', "@PST", tmp1);
             }
-            Sharp.addScore([scoring, academic_scoring], 'ca_previous', "@PST", tmp1);
+            
                 
             //Whether machinery are shared with other farmers S4_SOC_06_share_machinery_msr
             tmp = currentAnswers['S4_SOC_06.share_machinery'];
@@ -2407,7 +2479,7 @@ var Sharp = (function ($, Moss, toastr) {
          *******************************/
         case 'S4_EC_02':
             tmp = currentAnswers['S4_EC_02.has_sold_products'];
-            if(tmp === 'yes'){
+            if (tmp === 'yes') {
                                     //2monthly 3week all_time
                 //Frequency of selling at local farmer’s market
                /* tmp = currentAnswers['S4_EC_02.access_to_local_market'];
@@ -2588,14 +2660,14 @@ var Sharp = (function ($, Moss, toastr) {
             
             //since not applicable has been added, i don't add to the total the answers 'not applicable'
             d = Moss.fn.count(/^S4_EC_04\.mrkt_acc_selling#buyer_agreement.*$/, '_not_applicable', currentAnswers);
-            tmp += d;
-            if( tmp >d){
-               tmp1 = ((a * 10) + (b * 5) + (c * ZERO)) / (tmp > 0 ? tmp : 1);
+            //tmp += d;
+            
+            tmp1 = ((a * 10) + (b * 5) + (c * ZERO)) / (tmp > 0 ? tmp : 1);
               //  a = a > 0 ? (a * 10) / a : 0;
                // b = b > 0 ? (b * 5) / b : 0;
               // c = 0;
-                Sharp.addScore([scoring, academic_scoring], 'ma_buyer_agreement', "@S4_EC_04_buyer_agreement_msr", tmp1);            
-            }
+            Sharp.addScore([scoring, academic_scoring], 'ma_buyer_agreement', "@S4_EC_04_buyer_agreement_msr", tmp1);
+            
          
             //S4_EC_04.mrkt_acc_selling#buyer_agreement#crop1:yes
             //Yes=10 , No = 0 
@@ -2603,6 +2675,8 @@ var Sharp = (function ($, Moss, toastr) {
                 
             //Percentage of products sold through direct selling
             //%/10=score  S4_EC_04.perc_direct_selling  -->S4_EC_04_perc_direct_selling_msr S4_EC_04.perc_direct_selling
+                
+                
             tmp = currentAnswers['S4_EC_04.perc_direct_selling'];
             if (tmp) {
                 Sharp.addScore([scoring, academic_scoring], 'ma_direct_selling', "@S4_EC_04_perc_direct_selling_msr", tmp / 10);
@@ -3081,8 +3155,9 @@ var Sharp = (function ($, Moss, toastr) {
             b = Moss.fn.count(/^S4_EC_16\.interaction#contract_farming#.*$/, 'no', currentAnswers);
             tmp += b;
             tmp1 = tmp > 0 ? (a * 10) / tmp : 0;
-            Sharp.addScore([scoring, academic_scoring], 'ibs_contract_farming', "@S4_EC_16_self_contract_farming_msr", tmp1);
-                
+            if (tmp > 0) {
+                Sharp.addScore([scoring, academic_scoring], 'ibs_contract_farming', "@S4_EC_16_self_contract_farming_msr", tmp1);
+            }
             //Main Stakeholder determining the production     
             tmp = 0;
             tmp1 = 0;

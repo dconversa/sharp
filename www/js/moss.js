@@ -1949,7 +1949,7 @@ var Moss = (function ($, doT, toastr, JSZip) {
         try {
             ret = eval(expr);
             if (!ret) {
-                Moss.fn.log("Validation failed for " + app + " evaluated to " + expr);
+                Moss.fn.log("Validation failed for " + app + " evaluated to " + ret);
             }
             return ret;
         } catch (e) {
